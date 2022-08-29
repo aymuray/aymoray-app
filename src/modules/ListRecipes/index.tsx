@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import HeaderWithSearch from "components/HeaderWithSearch";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
@@ -18,27 +18,30 @@ const ListRecipes = () => {
   const [calorias, setCalorias] = useState('');
   const [uid, setUid] = useState('');
   const { navigate } = useNavigation();
-  useEffect ( async () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setName(user.displayName);
-        setUid(user.uid);
-      }
-    })
 
-    const q = query(collection(db, "Menus"), where("idUser", "==", uid));
+    useFocusEffect(
+        () => {
+            getRecipe().then(r => console.log('---'));
+        }
+    );
 
-    console.log("-----------ejecutando querry---------------------")
-    let temp = []
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      temp.push( doc.data())
-    });
-    setRecipes(temp);
+  const getRecipe = async () => {
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              setName(user.displayName);
+              setUid(user.uid);
+          }
+      })
+      const q = query(collection(db, "Menus"), where("idUser", "==", uid));
 
-    LogBox.ignoreLogs(["timer"]);
-  }, [uid]);
+      let temp = []
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+          temp.push(doc.data())
+      });
+      setRecipes(temp);
+      return recipes
+  };
 
 
   const goSearchExercires = useCallback(() => {

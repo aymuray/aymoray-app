@@ -79,7 +79,7 @@ const GenerateRecipe = () => {
         .then(function (response) {
           //handle success
           console.log(response.data)
-          navigate(Routes.Diary);
+          navigate(Routes.ListRecipes);
         })
         .catch(function (err) {
           //handle error
