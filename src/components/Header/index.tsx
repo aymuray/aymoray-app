@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     justifyContent: "space-between",
     paddingTop: Platform.OS === "android" ? 0 : getStatusBarHeight(true),
+    marginTop: Platform.OS === "android" ? 30 : 0,
     height: Platform.OS === "android" ? 50 : getStatusBarHeight(true) + 44,
     backgroundColor: Colors.white,
     flexDirection: "row",

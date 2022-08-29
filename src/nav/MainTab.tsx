@@ -22,6 +22,7 @@ import BoxWater from "modules/Diary/components/BoxWater";
 import BoxSelectFood from "components/BoxSelectFood";
 import ButtonMainTab from "components/ButtonMainTab";
 import Routes from "config/Routes";
+import ListRecipes from "modules/ListRecipes";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +34,7 @@ const MainTab = () => {
       <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
         <Tab.Screen name={Routes.Diary} component={Diary} />
         <Tab.Screen name={Routes.Exercires} component={Exercires} />
-        <Tab.Screen name={Routes.WorkoutPlan} component={WorkoutPlan} />
+        <Tab.Screen name={Routes.ListRecipes} component={ListRecipes} />
         <Tab.Screen name={Routes.More} component={More} />
       </Tab.Navigator>
       <ButtonMainTab
@@ -109,8 +110,8 @@ function MyTabBar({ state, navigation }) {
     {
       active: Assets.icons.ic_workout_active,
       inActive: Assets.icons.ic_workout_normal,
-      label: "Rutina",
-      name: Routes.WorkoutPlan,
+      label: "Nutricion",
+      name: Routes.ListRecipes,
     },
     {
       inActive: Assets.icons.ic_more_normal,

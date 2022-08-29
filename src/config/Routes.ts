@@ -77,6 +77,7 @@ const Routes = {
   DailyDetail: "DailyDetail",
   BreakfastDetail: "BreakfastDetail",
   GenerateRecipe: "GenerateRecipe",
+  ListRecipes: "ListRecipes",
 };
 
 export default Routes;

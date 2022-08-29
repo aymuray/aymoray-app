@@ -14,7 +14,7 @@ const WorkoutPlan = () => {
   return (
     <View flex>
       <Header
-        title={"Workout Plans"}
+        title={"Mi Recetas"}
         noShadow
         btnRight={
           <Button

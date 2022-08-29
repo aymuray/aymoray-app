@@ -61,6 +61,7 @@ import DailyDetail from "modules/DailyDetail";
 import BreakfastDetail from "modules/BreakfastDetail";
 import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
+import ListRecipes from "modules/ListRecipes";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (

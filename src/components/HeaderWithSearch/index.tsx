@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 2,
+    marginTop: Platform.OS === "android" ? 30 : 0,
     paddingTop: Platform.OS === "ios" ? getStatusBarHeight(true) : 0,
     backgroundColor: Colors.white,
     zIndex: 100,
