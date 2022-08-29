@@ -81,7 +81,7 @@ const Diary = () => {
               Tu meta
             </Text>
             <Text M24 color28 marginT-8>
-              Ganar peso
+              Peder peso
             </Text>
           </View>
           <View width={1} backgroundColor={Colors.line} />

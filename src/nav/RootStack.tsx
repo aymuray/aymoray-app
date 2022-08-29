@@ -60,6 +60,7 @@ import { Platform } from "react-native";
 import DailyDetail from "modules/DailyDetail";
 import BreakfastDetail from "modules/BreakfastDetail";
 import ForgotPassword from "modules/ForgotPassword";
+import GenerateRecipe from "modules/GenerateRecipe";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
@@ -506,6 +507,17 @@ const RootStack = () => {
           component={BreakfastDetail}
           options={{
             headerShown: false,
+          }}
+        />
+        <Screen
+          name={Routes.GenerateRecipe}
+          component={GenerateRecipe}
+          options={{
+              title: "Generar receta",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
           }}
         />
       </Navigator>

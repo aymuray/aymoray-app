@@ -109,7 +109,7 @@ function MyTabBar({ state, navigation }) {
     {
       active: Assets.icons.ic_workout_active,
       inActive: Assets.icons.ic_workout_normal,
-      label: "Ejercicio",
+      label: "Rutina",
       name: Routes.WorkoutPlan,
     },
     {

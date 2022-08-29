@@ -24,6 +24,7 @@
     "@react-navigation/material-top-tabs": "^5.3.14",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
+    "axios": "^0.27.2",
     "d3-array": "^3.0.1",
     "expo": "^44.0.0",
     "expo-asset": "~8.4.6",
@@ -40,6 +41,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.12.2",
+    "react-hook-select": "^1.6.0",
     "react-native": "0.64.3",
     "react-native-calendars": "^1.1254.0",
     "react-native-camera": "^3.43.0",
@@ -55,6 +57,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-segmented-round-display": "^1.0.0",
+    "react-native-select-dropdown": "^2.0.4",
     "react-native-slider": "0.11.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "12.1.1",
@@ -66,6 +69,7 @@
     "react-native-video": "^5.1.1",
     "react-native-web": "0.17.1",
     "react-native-webview": "11.15.0",
+    "react-select": "^5.4.0",
     "victory-native": "^35.3.1"
   },
   "devDependencies": {

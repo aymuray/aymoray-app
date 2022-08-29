@@ -1,6 +1,9 @@
 import ActionButton from "libs/react-native-circular-action-menu/ActionButton";
 import React from "react";
 import { Text, Image, Assets } from "react-native-ui-lib";
+import Routes from "config/Routes";
+import {useNavigation} from "@react-navigation/native";
+import GenerateRecipe from "modules/GenerateRecipe";
 
 interface Props {
   onPress: () => void;
@@ -40,25 +43,29 @@ const ButtonMainTab = ({ onPress, onShowFood, onShowWater }: Props) => {
       },
     },
   ];
+  const {navigate} = useNavigation();
+  const addMenu = React.useCallback(() => {
+    navigate(Routes.GenerateRecipe);
+  }, []);
 
   return (
     <ActionButton
-      onPress={onPress}
+      onPress={addMenu}
       buttonColor="rgba(231,76,60,1)"
       itemSize={100}
       btnOutRange={"rgba(231,76,60,1)"}
       size={40}
     >
-      {DATA.map((item, index) => {
-        return (
-          <ActionButton.Item onPress={item.onPress} itemSize={100} key={index}>
-            <Image source={item.img} />
-            <Text white M14 style={{ marginTop: -10 }}>
-              {item.title}
-            </Text>
-          </ActionButton.Item>
-        );
-      })}
+      {/*{DATA.map((item, index) => {*/}
+      {/*  return (*/}
+      {/*    <ActionButton.Item onPress={item.onPress} itemSize={100} key={index}>*/}
+      {/*      <Image source={item.img} />*/}
+      {/*      <Text white M14 style={{ marginTop: -10 }}>*/}
+      {/*        {item.title}*/}
+      {/*      </Text>*/}
+      {/*    </ActionButton.Item>*/}
+      {/*  );*/}
+      {/*})}*/}
     </ActionButton>
   );
 };
