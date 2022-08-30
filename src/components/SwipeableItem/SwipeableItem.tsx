@@ -24,14 +24,14 @@ const SwipeableItem = ({ children }) => {
           <RectButton style={styles.btn} onPress={() => {}}>
             <Image source={Assets.icons.ic_delete_wo_plan} marginB-8 />
             <Text R12 white>
-              Delete
+              Eliminar
             </Text>
           </RectButton>
 
           <RectButton style={styles.btn} onPress={() => {}}>
             <Image source={Assets.icons.ic_active_plan} marginB-8 />
             <Text R12 white>
-              Archive
+              Ver detalle
             </Text>
           </RectButton>
         </LinearGradient>

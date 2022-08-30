@@ -10,6 +10,7 @@ import Box from "components/Box";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
 import {doc, getDocs, query, collection, where} from "firebase/firestore";
+import ItemRecipe from "components/ItemRecipe";
 const widthItem = (width - 48) / 2;
 const ListRecipes = () => {
   const [name, setName] = useState('');
@@ -21,7 +22,7 @@ const ListRecipes = () => {
 
     useFocusEffect(
         () => {
-            getRecipe().then(r => console.log('---'));
+            getRecipe().then(r => setRecipes(r));
         }
     );
 
@@ -37,10 +38,14 @@ const ListRecipes = () => {
       let temp = []
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-          temp.push(doc.data())
+          temp.push(
+              {
+                  id: doc.id,
+                  data:doc.data(),
+              }
+          )
       });
-      setRecipes(temp);
-      return recipes
+      return temp
   };
 
 
@@ -59,26 +64,43 @@ const ListRecipes = () => {
               marginRight: 'auto'
             }}
         >
-          {recipes.map((item, index) => {
-                return (
-                    <Box>
-                      <View
-                          row
-                          paddingH-16
-                          paddingV-12
-                          style={{justifyContent: 'space-between', alignItems: 'center', marginLeft: 'auto', marginRight: 'auto'}}>
-                        <Text M14 color28 marginT-16 style={{ paddingLeft: 16 }}>
-                          Dias <Text B14>{item.dias}</Text>,
-                          {"\n"}Catidad de calorias por dias: <Text B14>{item.caloriaObjetivo}</Text>,
-                          {"\n"}Catidad de proteinas por dias: <Text B14>{item.proteinaObjetivo}</Text>,
-                          {"\n"}Fecha de creacion: <Text B14>{item.FechaCreacion.toDate().toLocaleDateString('es-ES')}</Text>,
-                        </Text>
-                      </View>
-                      {/*<View height={1} backgroundColor={Colors.line} marginB-16 />*/}
-                    </Box>
-                )}
-          )}
         </View>
+          <View
+              marginH-16
+              marginB-16
+              style={{
+                  borderRadius: 6,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                      width: 0,
+                      height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.22,
+                  elevation: 3,
+              }}
+              backgroundColor={Colors.white}
+          >
+              <View
+                  row
+                  paddingH-16
+                  paddingV-12
+                  style={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                  <Text H14 color28 uppercase>
+                      Tus recetas
+                  </Text>
+              </View>
+              {recipes.map((item, index) => {
+                  return (
+                      <View>
+                          <View height={1} backgroundColor={Colors.line} />
+                          <ItemRecipe dataRecipe={item}/>
+                      </View>
+                  )}
+              )}
+
+          </View>
       </ScrollView>
     </View>
   );
