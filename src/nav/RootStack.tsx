@@ -62,6 +62,7 @@ import BreakfastDetail from "modules/BreakfastDetail";
 import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
 import ListRecipes from "modules/ListRecipes";
+import ListDetailRecipes from "modules/ListDetailRecipes";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
@@ -515,6 +516,17 @@ const RootStack = () => {
           component={GenerateRecipe}
           options={{
               title: "Generar receta",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.ListDetailRecipes}
+          component={ListDetailRecipes}
+          options={{
+              title: "detalle receta",
               headerStyle: {
                   shadowColor: "transparent",
                   elevation: 0,

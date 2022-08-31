@@ -90,34 +90,39 @@ const GenerateRecipe = () => {
     }
     if (temp_dias===0 && temp_alimentos===0  && temp_precios===0 ){
       if(actionButton){
-        setActionButton(false);
-        console.log(DiasMenu);
-        console.log('-------------------------');
-        console.log(DiasMenu);
-        console.log(parseInt(calorias));
-        console.log(uid);
-        console.log('-------------------------');
-        await axios({
-          method: 'post',
-          url: "https://us-central1-dev-tesis.cloudfunctions.net/app/AG",
-          data: {
-            idUser: uid,
-            dias: DiasMenu,
-            caloriaObjetivo: parseInt(calorias),
-            proteinaObjetivo: 150,
-          },
-          headers: {
-            'Content-Type': 'application/json'
-          }})
-            .then(function (response) {
-              //handle success
-              console.log(response.data)
-              navigate(Routes.ListRecipes);
-            })
-            .catch(function (err) {
-              //handle error
-              console.log(err)
-            });
+        try {
+          setActionButton(false);
+          console.log(DiasMenu);
+          console.log('-------------------------');
+          console.log(DiasMenu);
+          console.log(parseInt(calorias));
+          console.log(uid);
+          console.log('-------------------------');
+          await axios({
+            method: 'post',
+            url: "https://us-central1-dev-tesis.cloudfunctions.net/app/AG",
+            data: {
+              idUser: uid,
+              dias: DiasMenu,
+              caloriaObjetivo: parseInt(calorias),
+              proteinaObjetivo: 150,
+            },
+            headers: {
+              'Content-Type': 'application/json'
+            }})
+              .then(function (response) {
+                //handle success
+                console.log(response.data)
+                navigate(Routes.ListRecipes, {
+                  refrescar: false,
+                } );
+              })
+              .catch(function (err) {
+                console.log(err)
+              });
+        }catch (e){
+          console.log(e)
+        }
       }
     }
   }, [DiasMenu, calorias, uid, actionButton, DiasMenu, precioMenu, alimentoMenu, requireDias, requireAlimento, requirePrecio]);

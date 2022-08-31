@@ -3,12 +3,13 @@ import Tag from "components/Tag";
 import React, {useEffect} from "react";
 import { StyleSheet } from "react-native";
 import { Assets, Colors, View, Text, Image } from "react-native-ui-lib";
-
+import SwipeableItemRecipe from "components/SwipeableItemRecipe/SwipeableItemRecipe";
+import Routes from "config/Routes";
 
 
 const ItemRecipe = ({dataRecipe}) => {
   return (
-    <SwipeableItem>
+    <SwipeableItemRecipe dataRecipe={dataRecipe}>
       <View padding-16>
         <Text M18 color28>
           Fecha creacion : {dataRecipe.data.FechaCreacion.toDate().toLocaleDateString('es-ES')}
@@ -42,7 +43,7 @@ const ItemRecipe = ({dataRecipe}) => {
           {/*)}*/}
         </View>
       </View>
-    </SwipeableItem>
+    </SwipeableItemRecipe>
   );
 };
 

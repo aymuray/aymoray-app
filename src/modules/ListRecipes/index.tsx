@@ -5,48 +5,66 @@ import { width } from "config/scaleAccordingToDevice";
 import React, {useCallback, useEffect, useState} from "react";
 import {LogBox, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
 import { View, Assets, Colors, Image, Text } from "react-native-ui-lib";
-import BoxExercire from "./components/BoxExercire";
-import Box from "components/Box";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
 import {doc, getDocs, query, collection, where} from "firebase/firestore";
 import ItemRecipe from "components/ItemRecipe";
+import { useIsFocused } from '@react-navigation/native';
 const widthItem = (width - 48) / 2;
 const ListRecipes = () => {
-  const [name, setName] = useState('');
-  const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
-  const [calorias, setCalorias] = useState('');
+  const [recipesTemp, setRecipesTemp] = useState([]);
   const [uid, setUid] = useState('');
-  const { navigate } = useNavigation();
+  const [IsRefreshing, setIsRefreshing] = useState(true);
 
-    useFocusEffect(
-        () => {
-            getRecipe().then(r => setRecipes(r));
+    const { navigate } = useNavigation();
+    const isFocused = useIsFocused();
+
+    useFocusEffect( React.useCallback(()=>{
+        getRecipe();
+    }, [uid, recipes]))
+
+
+    // useEffect(() => {
+    //     if (isFocused) {
+    //         console.log('In inFocused Block', isFocused);
+    //         getRecipe();
+    //     }
+    // }, [ isFocused ,uid]);
+
+    const getRecipe = async () => {
+        console.log('entre')
+        try {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    setUid(user.uid);
+                }
+            })
+            const q = query(collection(db, "Menus"), where("idUser", "==", uid));
+
+            let temp = []
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                temp.push(
+                    {
+                        id: doc.id,
+                        data: doc.data(),
+                    }
+                )
+            });
+            console.log('cantidad local', recipes.length);
+            console.log('cantidad firebase', temp.length);
+            if (recipes.length != temp.length) {
+                setRecipes(temp);
+                console.log('----se actualizo--------')
+            }
+            setIsRefreshing(false);
+        }catch (e){
+            console.log(e);
         }
-    );
+        setIsRefreshing(true);
+    };
 
-  const getRecipe = async () => {
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              setName(user.displayName);
-              setUid(user.uid);
-          }
-      })
-      const q = query(collection(db, "Menus"), where("idUser", "==", uid));
-
-      let temp = []
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-          temp.push(
-              {
-                  id: doc.id,
-                  data:doc.data(),
-              }
-          )
-      });
-      return temp
-  };
 
 
   const goSearchExercires = useCallback(() => {
@@ -93,7 +111,7 @@ const ListRecipes = () => {
               </View>
               {recipes.map((item, index) => {
                   return (
-                      <View>
+                      <View key={index}>
                           <View height={1} backgroundColor={Colors.line} />
                           <ItemRecipe dataRecipe={item}/>
                       </View>

@@ -1,5 +1,6 @@
 import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
+import ListDetailRecipes from "modules/ListDetailRecipes";
 
 const Routes = {
   Walkthoughs: "Walkthoughs",
@@ -78,6 +79,7 @@ const Routes = {
   BreakfastDetail: "BreakfastDetail",
   GenerateRecipe: "GenerateRecipe",
   ListRecipes: "ListRecipes",
+  ListDetailRecipes: "ListDetailRecipes",
 };
 
 export default Routes;
