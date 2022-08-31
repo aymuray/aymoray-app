@@ -14,34 +14,26 @@ const ItemIngredient = ({dataRecipe}) => {
         <Text M18 color28>
             {dataRecipe.Nombre}
         </Text>
-        {/*<View row marginT-8>*/}
-        {/*  <View row centerV>*/}
-        {/*    <Image source={Assets.icons.ic_calories_burn} />*/}
-        {/*    <Text R14 color6D marginL-4>*/}
-        {/*      {dataRecipe.data.caloriaObjetivo} cal*/}
-        {/*    </Text>*/}
-        {/*  </View>*/}
-        {/*  <View row marginL-24 centerV>*/}
-        {/*    <Image source={Assets.icons.ic_calories_burn} />*/}
-        {/*    <Text R14 color6D marginL-4>*/}
-        {/*      {dataRecipe.data.proteinaObjetivo} prot*/}
-        {/*    </Text>*/}
-        {/*  </View>*/}
-        {/*  <View row marginL-24 centerV>*/}
-        {/*    <Image source={Assets.icons.ic_time_16} />*/}
-        {/*    <Text R14 color6D marginL-4>*/}
-        {/*      {dataRecipe.data.dias} dias*/}
-        {/*    </Text>*/}
-        {/*  </View>*/}
-        {/*  /!*{!!rating && (*!/*/}
-        {/*  /!*  <View row marginL-24 centerV>*!/*/}
-        {/*  /!*    <Image source={Assets.icons.ic_rating_16} />*!/*/}
-        {/*  /!*    <Text R14 color6D marginL-4>*!/*/}
-        {/*  /!*      10*!/*/}
-        {/*  /!*    </Text>*!/*/}
-        {/*  /!*  </View>*!/*/}
-        {/*  /!*)}*!/*/}
-        {/*</View>*/}
+        <View row marginT-8>
+          <View row centerV>
+            <Image source={Assets.icons.ic_calories_burn} />
+            <Text R14 color6D marginL-4>
+              {dataRecipe.Cals} cal
+            </Text>
+          </View>
+          <View row marginL-24 centerV>
+            <Image source={Assets.icons.ic_calories_burn} />
+            <Text R14 color6D marginL-4>
+              {dataRecipe.Prot} prot
+            </Text>
+          </View>
+          <View row marginL-24 centerV>
+            <Image source={Assets.icons.ic_time_16} />
+            <Text R14 color6D marginL-4>
+              {dataRecipe.CostoKilo} soles
+            </Text>
+          </View>
+        </View>
       </View>
     </SwipeableItemRecipe>
   );
