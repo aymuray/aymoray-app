@@ -20,7 +20,7 @@ import {FontAwesome} from "@expo/vector-icons";
 import axios from "axios";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
-import {doc, getDoc} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
 import Diary from "modules/Diary";
 
 const GenerateRecipe = () => {
@@ -38,6 +38,8 @@ const GenerateRecipe = () => {
   const [requireDias, setRequireDias] = useState(3);
   const [requireAlimento, setRequireAlimento] = useState(3);
   const [requirePrecio, setRequirePrecio] = useState(3);
+  const [dataAlimentos, setDataAlimentos] = useState([]);
+  const [activateMenu, setActivateMenu] = useState(false);
   const {control} = useForm({
     defaultValues: {
       name: '',
@@ -49,17 +51,45 @@ const GenerateRecipe = () => {
   });
 
   useEffect ( async () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setName(user.displayName);
-        setUid(user.uid);
-      }
-    })
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setName(user.displayName);
+          setUid(user.uid);
+        }
+      })
+      let tempAlimentos = []
+      let temMenu = []
+      const docRef = doc(db, "usuarios", uid);
+      const docSnap = await getDoc(docRef);
+      setCalorias(docSnap.data().GET);
+      const querySnapshot  = await getDocs(collection(db, "Alimentos"));
+      querySnapshot.forEach((doc)=>{
+        tempAlimentos.push(doc.data().Nombre)
+      });
+      setDataAlimentos(tempAlimentos);
+      const queryMenus = await query(collection(db, "Menus"), where("idUser", "==", uid));
+      const querySnapshotMenus = await getDocs(queryMenus);
+      querySnapshotMenus.forEach((doc) => {
+        temMenu.push({
+          "FechaCreacion": doc.data().FechaCreacion.toDate().toLocaleDateString('es-ES'),
+          "dias": doc.data().dias
+        })
+      });
+      let FechaHoy = new Date()
+      temMenu.forEach(item =>{
+        if(item.FechaCreacion===FechaHoy.toLocaleDateString('es-ES')){
+          console.log('------------LAS FEHCAS COINCIDEN----------------')
+          setActivateMenu(true)
+        }
+      })
 
-    const docRef = doc(db, "usuarios", uid);
-    const docSnap = await getDoc(docRef);
-    setCalorias(docSnap.data().GET);
-    LogBox.ignoreLogs(["timer"]);
+
+      LogBox.ignoreLogs(["timer"]);
+    } catch (e){
+      console.log(e)
+    }
+
   }, [uid]);
 
   const Generate = React.useCallback(async () => {
@@ -88,7 +118,7 @@ const GenerateRecipe = () => {
       setRequireAlimento(0)
       temp_alimentos = 0;
     }
-    if (temp_dias===0 && temp_alimentos===0  && temp_precios===0 ){
+    if (temp_dias===0 && temp_alimentos===0  && temp_precios===0 && !activateMenu){
       if(actionButton){
         try {
           setActionButton(false);
@@ -106,6 +136,7 @@ const GenerateRecipe = () => {
               dias: DiasMenu,
               caloriaObjetivo: parseInt(calorias),
               proteinaObjetivo: 150,
+              alimentoNoDeseado: alimentoMenu
             },
             headers: {
               'Content-Type': 'application/json'
@@ -147,11 +178,11 @@ const GenerateRecipe = () => {
           <View height={1} backgroundColor={Colors.line} marginB-16 />
 
           <SelectDropdown
-              data={dias}
+              data={dataAlimentos}
               onSelect={(selectedItem, index) => {
                 console.log(DiasMenu)
                 let temp = index + 1;
-                setAlimentoMenu(temp);
+                setAlimentoMenu(selectedItem);
                 console.log(selectedItem, temp);
               }}
               defaultButtonText={'Seleccione un alimento '}
@@ -262,10 +293,14 @@ const GenerateRecipe = () => {
           {requirePrecio===1 && <Text R14 color28 style={{marginRight: 'auto', marginLeft:'auto', color: "#ff0000", paddingBottom: 12,}}>Este campo debe ser completado</Text>}
         </Box>
 
-
+        {activateMenu && <Text R14 color28 style={{marginRight: 'auto', marginLeft:'auto', color: "#ff0000", paddingBottom: 12,}}>Ya tiene un receta activa, espera que termine la vigencia de esta para generar otra</Text>}
         <ButtonLinear
           title={!actionButton ? "Cargando..." : "Listo"}
-          onPress={Generate}
+          onPress={ () =>{
+            if (activateMenu === false){
+              Generate()
+            }
+          } }
         />
       </KeyboardAwareScrollView>
     </View>
