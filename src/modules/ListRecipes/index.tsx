@@ -20,17 +20,17 @@ const ListRecipes = () => {
     const { navigate } = useNavigation();
     const isFocused = useIsFocused();
 
-    useFocusEffect( React.useCallback(()=>{
-        getRecipe();
-    }, [uid, recipes]))
+    // useFocusEffect( React.useCallback(()=>{
+    //     getRecipe();
+    // }, [uid, recipes]))
 
 
-    // useEffect(() => {
-    //     if (isFocused) {
-    //         console.log('In inFocused Block', isFocused);
-    //         getRecipe();
-    //     }
-    // }, [ isFocused ,uid]);
+    useEffect(() => {
+        if (isFocused) {
+            console.log('In inFocused Block', isFocused);
+            getRecipe();
+        }
+    }, [ isFocused ,uid]);
 
     const getRecipe = async () => {
         console.log('entre')

@@ -11,16 +11,18 @@ import { db} from "config/fb";
 import Diary from "modules/Diary";
 import ListDetailRecipes from "modules/ListDetailRecipes";
 const SwipeableItemRecipe = ({ children, dataRecipe}) => {
-  const {navigate} = useNavigation();
+  const navigate = useNavigation();
   const swipeableRef = useRef(null);
 
   const deleteRecipe = React.useCallback(async () => {
     await deleteDoc(doc(db, "Menus", dataRecipe.id)).then( ()=>{
-        console.log('se elimino');
-        // navigate(Routes.ListRecipes);
-        }
+      swipeableRef.current.close();
+      navigate.reset({
+        index: 0,
+        routes: [{ name: 'ListRecipes' }]
+      })
+    }
     );
-    swipeableRef.current.close();
   }, []);
 
   const detailRecipe = React.useCallback(async () => {
