@@ -63,6 +63,7 @@ import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
 import ListRecipes from "modules/ListRecipes";
 import ListDetailRecipes from "modules/ListDetailRecipes";
+import { SettingScreen } from "modules/Settings/SettingScreen";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
@@ -486,6 +487,13 @@ const RootStack = () => {
         <Screen
           name={Routes.Graph}
           component={Graph}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Screen
+          name={Routes.Settings}
+          component={SettingScreen}
           options={{
             headerShown: false,
           }}

@@ -80,6 +80,7 @@ const Routes = {
   GenerateRecipe: "GenerateRecipe",
   ListRecipes: "ListRecipes",
   ListDetailRecipes: "ListDetailRecipes",
+  Settings: "Settings",
 };
 
 export default Routes;

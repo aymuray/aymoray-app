@@ -46,6 +46,7 @@ const More = () => {
     {
       icon: Assets.icons.ic_settings,
       title: "Ajustes",
+      onPress: () => navigate(Routes.Settings),
     },
   ];
   return (
