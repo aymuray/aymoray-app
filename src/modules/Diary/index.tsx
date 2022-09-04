@@ -5,8 +5,8 @@ import SegmentedRoundDisplay from "components/SegmentedRoundDisplay";
 import { FONTS } from "config/FoundationConfig";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
-import React, {useEffect, useState} from "react";
-import {LogBox, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
+import React, { useEffect, useState } from "react";
+import { LogBox, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import {
   Text,
@@ -19,9 +19,9 @@ import {
 } from "react-native-ui-lib";
 import BoxFood from "./components/BoxFood";
 import BoxWater from "./components/BoxWater";
-import {onAuthStateChanged} from "firebase/auth";
-import {auth, db} from "config/fb";
-import {doc, getDoc} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "config/fb";
+import { doc, getDoc } from "firebase/firestore";
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -30,19 +30,68 @@ const Diary = () => {
   const [peso, setPeso] = useState('');
   const [uid, setUid] = useState('');
 
-  useEffect(async () => {
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              setName(user.displayName);
-              setUid(user.uid);
-          }
-      })
+  interface RoundDisplayData {
+    nutrientTitle: string;
+    nutrientEaten: number;
+    nutrientTotal: number;
+    description: string;
+  }
+  const [roundDisplayData, setRoundDisplayData] = useState<RoundDisplayData[]>([
+    {
+      nutrientTitle: 'Calorías',
+      nutrientEaten: 180,
+      nutrientTotal: 300,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Proteínas',
+      nutrientEaten: 250,
+      nutrientTotal: 500,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Grasas',
+      nutrientEaten: 50,
+      nutrientTotal: 150,
+      description: '',
+    },
+  ]);
 
-      const docRef = doc(db, "usuarios", uid);
-      const docSnap = await getDoc(docRef);
-      setUser(docSnap.data());
-      setPeso(docSnap.data().peso);
-      LogBox.ignoreLogs(["timer"]);
+  const [nutrientRef, setNutrienRef] = useState<number>(0);
+
+  const nextNutrient = () => {
+    if (nutrientRef === 0) {
+      setNutrienRef(nutrientRef + 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef + 1);
+    } else {
+      setNutrienRef(0);
+    }
+  }
+
+  const previusNutrient = () => {
+    if (nutrientRef === 2) {
+      setNutrienRef(nutrientRef - 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef - 1);
+    } else {
+      setNutrienRef(2);
+    }
+  }
+
+  useEffect(async () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName);
+        setUid(user.uid);
+      }
+    })
+
+    const docRef = doc(db, "usuarios", uid);
+    const docSnap = await getDoc(docRef);
+    setUser(docSnap.data());
+    setPeso(docSnap.data().peso);
+    LogBox.ignoreLogs(["timer"]);
   }, [uid]);
   return (
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
@@ -91,7 +140,7 @@ const Diary = () => {
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
-                  {peso} {" "}
+                {peso} {" "}
                 <Text R18 color28>
                   kg
                 </Text>
@@ -125,11 +174,11 @@ const Diary = () => {
               alignItems: "center",
             }}
           >
-            <Button iconSource={Assets.icons.btn_back_day} />
+            <Button onPress={() => previusNutrient()} iconSource={Assets.icons.btn_back_day} />
             <Text R14 color28>
-              Hoy
+              {roundDisplayData[nutrientRef].nutrientTitle}
             </Text>
-            <Button iconSource={Assets.icons.btn_next_day} />
+            <Button onPress={() => nextNutrient()} iconSource={Assets.icons.btn_next_day} />
           </View>
           <View
             row
@@ -146,14 +195,23 @@ const Diary = () => {
               }}
             >
               <Text M24 color28>
-                1317
+                {roundDisplayData[nutrientRef].nutrientEaten}
               </Text>
               <Text R14 color6D>
                 Comido
               </Text>
             </View>
             <View height={133} width={133}>
-              <SegmentedRoundDisplay />
+              <SegmentedRoundDisplay
+                data={roundDisplayData[nutrientRef].nutrientEaten}
+                maxValue={roundDisplayData[nutrientRef].nutrientTotal}
+                width={133}
+                size={130}
+                strokeWidth={6}
+                numberOfSection={4}
+                startAngle={-55}
+                endAngle={235}
+                dataTitleFaltante={roundDisplayData[nutrientRef].nutrientTitle + ' restante'} />
               <TouchableOpacity
                 style={{
                   position: "absolute",
@@ -212,7 +270,7 @@ const Diary = () => {
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
             <Text H14 color28 uppercase>
-               Plan de entrenamiento
+              Plan de entrenamiento
             </Text>
             <Button
               iconSource={Assets.icons.ic_add_16}

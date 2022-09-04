@@ -9,23 +9,36 @@ const { PI } = Math;
 const { multiply } = Animated;
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
+interface RoudDisplayData {
+  data: number;
+  maxValue: number;
+  width: number;
+  size: number;
+  strokeWidth: number;
+  numberOfSection: number;
+  startAngle: number;
+  endAngle: number;
+  dataTitleFaltante: string;
+}
+
 const Anemometer = memo(
   ({
-    data = [{ value: 15 }],
-    maxValue = 60,
+    data = 0,
+    maxValue = 100,
     width = 133,
     size = 130,
     strokeWidth = 6,
     numberOfSection = 4,
     startAngle = -55,
     endAngle = 235,
-  }) => {
+    dataTitleFaltante = 'test restante'
+  }: RoudDisplayData) => {
     const center = {
       x: size / 2,
       y: size / 2,
     };
 
-    const value = data.length ? data[0].value : 0;
+    const value = (data != 0) ? data : 0;
 
     const radius = (size - strokeWidth) / 2;
     const viewBox = `0 0 ${width} ${width}`;
@@ -34,9 +47,8 @@ const Anemometer = memo(
     const strokeAngle = (endAngle - startAngle) / numberOfSection;
     const strokeLength = (strokeAngle * circumference) / 360 - 1;
     const strokeDasharrayBg = `${strokeLength} 1`;
-    const strokeDasharray = `${
-      ((endAngle - startAngle) / 360) * circumference
-    } ${((endAngle - startAngle) / 360) * circumference}`;
+    const strokeDasharray = `${((endAngle - startAngle) / 360) * circumference
+      } ${((endAngle - startAngle) / 360) * circumference}`;
     const totalAngle = (3 * PI) / 2;
     const alpha = (value * totalAngle) / maxValue;
     const currentAngle = alpha - totalAngle;
@@ -78,7 +90,7 @@ const Anemometer = memo(
             y={width / 2}
             textAnchor="middle"
           >
-            1970
+            {maxValue - data}
           </Text>
           <Text
             fill={Colors.color6D}
@@ -87,7 +99,7 @@ const Anemometer = memo(
             y={width / 2 + 20}
             textAnchor="middle"
           >
-            Calorías restantes
+            {dataTitleFaltante}
           </Text>
         </Svg>
       </View>
