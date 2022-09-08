@@ -63,6 +63,12 @@ import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
 import ListRecipes from "modules/ListRecipes";
 import ListDetailRecipes from "modules/ListDetailRecipes";
+import EditSport from "modules/EditPerfil/EditSport";
+import EditWeight from "modules/EditPerfil/EditWeight";
+import EditTrainingLevel from "modules/EditPerfil/EditTrainingLevel";
+import EditSex from "modules/EditPerfil/EditSex";
+import EditHeight from "modules/EditPerfil/EditHeight";
+import EditName from "modules/EditPerfil/EditName";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
@@ -527,6 +533,72 @@ const RootStack = () => {
           component={ListDetailRecipes}
           options={{
               title: "detalle receta",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditSport}
+          component={EditSport}
+          options={{
+              title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditWeight}
+          component={EditWeight}
+          options={{
+              title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditTrainingLevel}
+          component={EditTrainingLevel}
+          options={{
+              title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditSex}
+          component={EditSex}
+          options={{
+              title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditHeight}
+          component={EditHeight}
+          options={{
+              title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.EditName}
+          component={EditName}
+          options={{
+              title: "",
               headerStyle: {
                   shadowColor: "transparent",
                   elevation: 0,
