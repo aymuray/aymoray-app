@@ -2,12 +2,17 @@ import ButtonLinear from 'components/ButtonLinear';
 import Header from 'components/Header';
 import Input from 'components/Input';
 import {width} from 'config/scaleAccordingToDevice';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {LogBox, StyleSheet, TouchableOpacity} from 'react-native';
 import {View, Text, Colors, KeyboardAwareScrollView} from 'react-native-ui-lib';
 import SelectDropdown from "react-native-select-dropdown";
 import {FontAwesome} from "@expo/vector-icons";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth, db} from "config/fb";
+import {doc, addDoc, collection} from "firebase/firestore";
+import Routes from "config/Routes";
+import {useNavigation} from "@react-navigation/native";
 
 const AddExercire = () => {
     const tipoEjercicio = ["aeróbico", "resistencia", "flexibilidad", "fortalecimiento "];
@@ -20,6 +25,7 @@ const AddExercire = () => {
         {day: 'Sa'},
         {day: 'Do'},
     ];
+    const [uid, setUid] = useState('');
     const [selectDay1, setSelectDay1] = useState(false);
     const [selectDay2, setSelectDay2] = useState(false);
     const [selectDay3, setSelectDay3] = useState(false);
@@ -28,6 +34,23 @@ const AddExercire = () => {
     const [selectDay6, setSelectDay6] = useState(false);
     const [selectDay7, setSelectDay7] = useState(false);
     const [selectLevel, setSelectLevel] = useState('');
+    const {navigate} = useNavigation();
+
+    useEffect ( async () => {
+        try {
+            await onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    setUid(user.uid);
+                }
+            })
+            LogBox.ignoreLogs(["timer"]);
+        } catch (e){
+            console.log(e)
+        }
+
+    }, [uid]);
+
+
   const {control, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
       name: '',
@@ -69,9 +92,16 @@ const AddExercire = () => {
     training.descripcion = data.calories;
     training.minutos = data.duration;
     training.tipoEjercicio =  selectLevel;
+    training.idUser = uid;
     console.log(training);
-
-    },[selectLevel, selectDay1, selectDay2, selectDay3, selectDay4, selectDay5, selectDay6, selectDay7])
+    try {
+        await addDoc(collection(db, "Ejercicios"), training).then(()=>{
+            navigate(Routes.Diary);
+        });
+    }catch (e){
+        console.log(e)
+    }
+    },[selectLevel, selectDay1, selectDay2, selectDay3, selectDay4, selectDay5, selectDay6, selectDay7, uid])
 
   return (
     <View flex>
