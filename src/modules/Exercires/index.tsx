@@ -33,7 +33,7 @@ const Exercires = () => {
         <View height={16} />
         <Box>
           <Text M14 color6D marginH-24 marginT-24 center>
-            Your current nutrition ratio
+            Tu porcentaje de ejercicio
           </Text>
           <PieChart />
         </Box>

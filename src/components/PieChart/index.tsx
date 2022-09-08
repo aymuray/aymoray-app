@@ -6,27 +6,45 @@ const PieChart = () => {
   const data = [
     {
       key: 2,
-      amount: 11,
+      amount: 10,
       svg: { fill: "#5AC8FB" },
-      label: "Fat",
+      label: "Lunes",
     },
     {
       key: 3,
-      amount: 4,
+      amount: 10,
       svg: { fill: "#5856D6" },
-      label: "Carbs",
+      label: "Marter",
     },
     {
       key: 4,
-      amount: 74,
-      svg: { fill: "#FF5E3A" },
-      label: "Protein",
+      amount: 10,
+      svg: { fill: "#ef6d51" },
+      label: "Miercoles",
     },
     {
       key: 1,
-      amount: 10,
+      amount: 25,
       svg: { fill: "#44DB5E" },
-      label: "Others",
+      label: "Jueves",
+    },
+    {
+      key: 5,
+      amount: 10,
+      svg: { fill: "#db44b8" },
+      label: "Viernes",
+    },
+    {
+      key: 6,
+      amount: 15,
+      svg: { fill: "#f3e71d" },
+      label: "Sabado",
+    },
+    {
+      key: 7,
+      amount: 20,
+      svg: { fill: "#ff0000" },
+      label: "Domingo",
     },
   ];
 
@@ -52,7 +70,7 @@ const PieChart = () => {
           256
         </Text>
         <Text R14 color6D>
-          Calories
+          Minutos
         </Text>
       </View>
       <View centerV marginL-24>
