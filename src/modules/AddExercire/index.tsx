@@ -13,6 +13,7 @@ import {auth, db} from "config/fb";
 import {doc, addDoc, collection} from "firebase/firestore";
 import Routes from "config/Routes";
 import {useNavigation} from "@react-navigation/native";
+import Exercires from "modules/Exercires";
 
 const AddExercire = () => {
     const tipoEjercicio = ["aeróbico", "resistencia", "flexibilidad", "fortalecimiento "];
@@ -96,7 +97,7 @@ const AddExercire = () => {
     console.log(training);
     try {
         await addDoc(collection(db, "Ejercicios"), training).then(()=>{
-            navigate(Routes.Diary);
+            navigate(Routes.Exercires);
         });
     }catch (e){
         console.log(e)
