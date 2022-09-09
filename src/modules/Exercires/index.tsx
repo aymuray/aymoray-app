@@ -8,6 +8,7 @@ import { View, Assets, Colors, Image, Text } from "react-native-ui-lib";
 import BoxExercire from "./components/BoxExercire";
 import Box from "components/Box";
 import PieChart from "components/PieChart";
+import ListExercise from "modules/ListExercise";
 const widthItem = (width - 48) / 2;
 const Exercires = () => {
   const { navigate } = useNavigation();
@@ -15,7 +16,7 @@ const Exercires = () => {
     {
       icon: Assets.icons.ic_exercise_list,
       title: "Lista de ejercicios",
-      onPress: () => navigate(Routes.MuscleGroup),
+      onPress: () => navigate(Routes.ListExercise),
     },
     {
       icon: Assets.icons.ic_user_plan,

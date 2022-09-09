@@ -69,6 +69,7 @@ import EditTrainingLevel from "modules/EditPerfil/EditTrainingLevel";
 import EditSex from "modules/EditPerfil/EditSex";
 import EditHeight from "modules/EditPerfil/EditHeight";
 import EditName from "modules/EditPerfil/EditName";
+import ListExercise from "modules/ListExercise";
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
@@ -599,6 +600,17 @@ const RootStack = () => {
           component={EditName}
           options={{
               title: "",
+              headerStyle: {
+                  shadowColor: "transparent",
+                  elevation: 0,
+              },
+          }}
+        />
+        <Screen
+          name={Routes.ListExercise}
+          component={ListExercise}
+          options={{
+              title: "Lista de ejercicios",
               headerStyle: {
                   shadowColor: "transparent",
                   elevation: 0,
