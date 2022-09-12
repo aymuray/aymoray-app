@@ -3,7 +3,6 @@ import Header from "components/Header";
 import { width } from "config/scaleAccordingToDevice";
 import { View, Text, Assets, Colors, Image } from "react-native-ui-lib";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Routes from "config/Routes";
 import { useNavigation } from "@react-navigation/native";
 
 
