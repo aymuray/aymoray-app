@@ -24,15 +24,18 @@ const ListExercise = () => {
     const [sabado, setSabado] = useState([]);
     const [domingo, setDomingo] = useState([]);
     const [exercise, setExercise] = useState([]);
+    const isFocused = useIsFocused();
 
     const { navigate } = useNavigation();
 
-    useEffect( () => {
+
+    useEffect(() => {
         getExercices();
-    })
+    }, [ uid])
 
 
-    const getExercices= async ()=>{
+    const getExercices = async () => {
+        console.log('++++++++++++++++entre');
         try {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -174,7 +177,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item} dia={"lunes"} />
                       </View>
                   )}
               )}
@@ -208,9 +211,9 @@ const ListExercise = () => {
           </View>
           {martes.map((item, index) => {
               return (
-                  <View key={index}>
+                  <View key={index} onPress={getExercices}>
                       <View height={1} backgroundColor={Colors.color28} />
-                      <ItemExercise data={item}/>
+                      <ItemExercise data={item} dia={"martes"} />
                   </View>
               )}
           )}
@@ -246,7 +249,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item} dia={"miercoles"} />
                       </View>
                   )}
               )}
@@ -282,7 +285,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item} dia={"jueves"} />
                       </View>
                   )}
               )}
@@ -318,7 +321,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item} dia={"viernes"} />
                       </View>
                   )}
               )}
@@ -354,7 +357,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item} dia={"sabado"} />
                       </View>
                   )}
               )}
@@ -390,7 +393,7 @@ const ListExercise = () => {
                   return (
                       <View key={index}>
                           <View height={1} backgroundColor={Colors.color28} />
-                          <ItemExercise data={item}/>
+                          <ItemExercise data={item}  dia={"domingo"} />
                       </View>
                   )}
               )}

@@ -4,12 +4,13 @@ import React, {useEffect} from "react";
 import { StyleSheet } from "react-native";
 import { Assets, Colors, View, Text, Image } from "react-native-ui-lib";
 import SwipeableItemRecipe from "components/SwipeableItemRecipe/SwipeableItemRecipe";
+import SwipeableItemExercise from "components/SwipeableItemExercise/SwipeableItemExercise";
 import Routes from "config/Routes";
 
 
-const ItemExercise = ({data}) => {
+const ItemExercise = ({data, dia}) => {
   return (
-    <SwipeableItemRecipe dataRecipe={data}>
+    <SwipeableItemExercise dataExercise={data} dia={dia}>
       <View padding-16>
         <Text M18 color28>
           {data.data.nombre}
@@ -40,7 +41,7 @@ const ItemExercise = ({data}) => {
           {/*)}*/}
         </View>
       </View>
-    </SwipeableItemRecipe>
+    </SwipeableItemExercise>
   );
 };
 
