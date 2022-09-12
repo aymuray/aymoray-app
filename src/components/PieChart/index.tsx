@@ -4,54 +4,10 @@ import { PieChart as PieChartSvg } from "react-native-svg-charts";
 import { View, Text } from "react-native-ui-lib";
 import { onAuthStateChanged } from "firebase/auth";
 import {auth, db} from "config/fb";
-import {doc, getDocs, query, collection, where} from "firebase/firestore";
+import { doc, getDocs, query, collection, where } from "firebase/firestore";
+import { useIsFocused } from '@react-navigation/native';
 const PieChart = () => {
-  const data = [
-    {
-      key: 2,
-      amount: 10,
-      svg: { fill: "#5AC8FB" },
-      label: "Lunes",
-    },
-    {
-      key: 3,
-      amount: 10,
-      svg: { fill: "#5856D6" },
-      label: "Marter",
-    },
-    {
-      key: 4,
-      amount: 10,
-      svg: { fill: "#ef6d51" },
-      label: "Miercoles",
-    },
-    {
-      key: 1,
-      amount: 25,
-      svg: { fill: "#44DB5E" },
-      label: "Jueves",
-    },
-    {
-      key: 5,
-      amount: 10,
-      svg: { fill: "#db44b8" },
-      label: "Viernes",
-    },
-    {
-      key: 6,
-      amount: 15,
-      svg: { fill: "#f3e71d" },
-      label: "Sabado",
-    },
-    {
-      key: 7,
-      amount: 20,
-      svg: { fill: "#ff0000" },
-      label: "Domingo",
-    },
-  ];
-
-
+  const isFocused = useIsFocused();
   const [total, setTotal] = useState(0);
   const [uid, setUid] = useState('');
   const [IsRefreshing, setIsRefreshing] = useState(true);
@@ -101,8 +57,12 @@ const PieChart = () => {
   ]);
 
   useEffect(() => { 
-    getExercices();
-  }, [uid]);
+    if (isFocused) {
+        console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        getExercices();
+
+    }
+  }, [uid, isFocused]);
 
   const getExercices = async () => {
     console.log('///////////////entre//////////////////////');
