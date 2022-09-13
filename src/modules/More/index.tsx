@@ -3,8 +3,10 @@ import Header from "components/Header";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
 import React from "react";
-import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { View, Colors, Assets, Image, Text } from "react-native-ui-lib";
+import {auth} from "config/fb";
+import {signOut} from "firebase/auth";
 
 const widthItem = (width - 48) / 2;
 const More = () => {
@@ -42,6 +44,24 @@ const More = () => {
     {
       icon: Assets.icons.ic_help,
       title: "Cerrar sesión",
+      onPress: () => {
+        Alert.alert(
+            '',
+            '¿ Estas seguro que quieres cerrar tu sesion en este dispositivo',
+            [
+              {text: 'Cancelar', onPress: () => console.log('OK Pressed'), style: 'cancel'},
+              {text: 'Si', onPress: () => {
+                  signOut(auth).then(() => {
+                    navigate(Routes.Login)
+                    console.log('OK Pressed')
+                  }).catch((error) => {
+                    console.log(error);
+                  });
+                }},
+            ],
+            { cancelable: false }
+        )
+      },
     },
     {
       icon: Assets.icons.ic_settings,
