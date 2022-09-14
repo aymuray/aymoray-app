@@ -22,6 +22,10 @@ import BoxWater from "./components/BoxWater";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
 import {doc, getDoc} from "firebase/firestore";
+import BoxFoodAlmuerzo from "modules/Diary/components/BoxFoodAlmuerzo";
+import BoxFoodDesayuno from "modules/Diary/components/BoxFoodDesayuno";
+import BoxFoodSnack from "modules/Diary/components/BoxFoodSnack";
+import BoxTraining from "modules/Diary/components/BoxTraining";
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -44,6 +48,7 @@ const Diary = () => {
       setPeso(docSnap.data().peso);
       LogBox.ignoreLogs(["timer"]);
   }, [uid]);
+
   return (
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
       <Image
@@ -189,62 +194,31 @@ const Diary = () => {
             </View>
           </View>
         </View>
-        <View
-          marginH-16
-          marginB-16
-          style={{
-            borderRadius: 6,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-          }}
-          backgroundColor={Colors.white}
-        >
-          <View
-            row
-            paddingH-16
-            paddingV-12
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <Text H14 color28 uppercase>
-               Plan de entrenamiento
-            </Text>
-            <Button
-              iconSource={Assets.icons.ic_add_16}
-              label={"Añadir plan"}
-              link
-              color={Colors.buttonLink}
-              labelStyle={{ fontSize: 14, fontFamily: FONTS.medium }}
-              onPress={() => navigate(Routes.WorkoutSchedule)}
-            />
-          </View>
-          <View height={1} backgroundColor={Colors.line} />
-          <ItemWorkOutPlan />
-        </View>
-        <BoxFood
+
+        <BoxTraining
+          title={"Plan de entrenamiento"}
+          onPress={() => {
+              navigate(Routes.AddFood);
+          }}/>
+        <BoxFoodDesayuno
           title={"DESAYUNO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"ALMUERZO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"CENA"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodSnack
           title={"Snack"}
           onPress={() => {
             navigate(Routes.AddFood);
