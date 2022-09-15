@@ -33,6 +33,8 @@ const Diary = () => {
   const [user, setUser] = useState(null);
   const [peso, setPeso] = useState('');
   const [uid, setUid] = useState('');
+  const [grasaCoporal, setGrasaCoporal] = useState('');
+  const [fechaPeso, setFechaPeso] = useState('');
 
   useEffect(async () => {
       onAuthStateChanged(auth, (user) => {
@@ -45,6 +47,8 @@ const Diary = () => {
       const docRef = doc(db, "usuarios", uid);
       const docSnap = await getDoc(docRef);
       setUser(docSnap.data());
+      setFechaPeso(docSnap.data().UltimaAltulizacionPeso.toDate().toLocaleDateString('es-ES'))
+      setGrasaCoporal(parseInt(docSnap.data().GC))
       setPeso(docSnap.data().peso);
       LogBox.ignoreLogs(["timer"]);
   }, [uid]);
@@ -92,7 +96,7 @@ const Diary = () => {
           <View width={1} backgroundColor={Colors.line} />
           <View paddingV-16 paddingL-16 flex>
             <Text R16 color6D>
-              Latest weight, Jan 22
+              ultima actualizacion de peso, {fechaPeso}
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
@@ -151,11 +155,14 @@ const Diary = () => {
               }}
             >
               <Text M24 color28>
-                1317
+                  {grasaCoporal} %
               </Text>
               <Text R14 color6D>
-                Comido
+                Grasa
               </Text>
+                <Text R14 color6D>
+                    Coporal
+                </Text>
             </View>
             <View height={133} width={133}>
               <SegmentedRoundDisplay />
@@ -186,11 +193,14 @@ const Diary = () => {
               }}
             >
               <Text M24 color28>
-                768
+                  18 %
               </Text>
               <Text R14 color6D>
-                Quemado
+                requisito
               </Text>
+                <Text R14 color6D>
+                    minimo
+                </Text>
             </View>
           </View>
         </View>
