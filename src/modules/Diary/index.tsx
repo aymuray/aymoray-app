@@ -60,7 +60,7 @@ const Diary = () => {
         style={{ position: "absolute", width: width }}
       />
       <ScrollView>
-        <ButtonIconBadge source={Assets.icons.ic_notification} label={"2"} />
+        {/* <ButtonIconBadge source={Assets.icons.ic_notification} label={"2"} /> */}
         <View row paddingL-16>
           {/* <Avatar source={Assets.icons.avatar} size={48} /> */}
           <Text R14 contentW style={{ paddingLeft: 16 }}>
