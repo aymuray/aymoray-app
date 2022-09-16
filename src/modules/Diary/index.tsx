@@ -19,9 +19,13 @@ import {
 } from "react-native-ui-lib";
 import BoxFood from "./components/BoxFood";
 import BoxWater from "./components/BoxWater";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "config/fb";
-import { doc, getDoc } from "firebase/firestore";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth, db} from "config/fb";
+import {doc, getDoc} from "firebase/firestore";
+import BoxFoodAlmuerzo from "modules/Diary/components/BoxFoodAlmuerzo";
+import BoxFoodDesayuno from "modules/Diary/components/BoxFoodDesayuno";
+import BoxFoodSnack from "modules/Diary/components/BoxFoodSnack";
+import BoxTraining from "modules/Diary/components/BoxTraining";
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -29,6 +33,8 @@ const Diary = () => {
   const [user, setUser] = useState(null);
   const [peso, setPeso] = useState('');
   const [uid, setUid] = useState('');
+  const [grasaCoporal, setGrasaCoporal] = useState('');
+  const [fechaPeso, setFechaPeso] = useState('');
 
   interface RoundDisplayData {
     nutrientTitle: string;
@@ -86,13 +92,15 @@ const Diary = () => {
         setUid(user.uid);
       }
     })
-
-    const docRef = doc(db, "usuarios", uid);
-    const docSnap = await getDoc(docRef);
-    setUser(docSnap.data());
-    setPeso(docSnap.data().peso);
-    LogBox.ignoreLogs(["timer"]);
+      const docRef = doc(db, "usuarios", uid);
+      const docSnap = await getDoc(docRef);
+      setUser(docSnap.data());
+      setFechaPeso(docSnap.data().UltimaAltulizacionPeso.toDate().toLocaleDateString('es-ES'))
+      setGrasaCoporal(parseInt(docSnap.data().GC))
+      setPeso(docSnap.data().peso);
+      LogBox.ignoreLogs(["timer"]);
   }, [uid]);
+
   return (
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
       <Image
@@ -136,7 +144,7 @@ const Diary = () => {
           <View width={1} backgroundColor={Colors.line} />
           <View paddingV-16 paddingL-16 flex>
             <Text R16 color6D>
-              Latest weight, Jan 22
+              ultima actualizacion de peso, {fechaPeso}
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
@@ -198,8 +206,11 @@ const Diary = () => {
                 {roundDisplayData[nutrientRef].nutrientEaten}
               </Text>
               <Text R14 color6D>
-                Comido
+                Grasa
               </Text>
+                <Text R14 color6D>
+                    Coporal
+                </Text>
             </View>
             <View height={133} width={133}>
               <SegmentedRoundDisplay
@@ -239,11 +250,14 @@ const Diary = () => {
               }}
             >
               <Text M24 color28>
-                768
+                  18 %
               </Text>
               <Text R14 color6D>
-                Quemado
+                requisito
               </Text>
+                <Text R14 color6D>
+                    minimo
+                </Text>
             </View>
           </View>
         </View>
@@ -285,24 +299,31 @@ const Diary = () => {
           <ItemWorkOutPlan />
         </View>
         <BoxFood
+        <BoxTraining
+          title={"Plan de entrenamiento"}
+          onPress={() => {
+              navigate(Routes.AddFood);
+          }}/>
+        <BoxFoodDesayuno
+
           title={"DESAYUNO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"ALMUERZO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"CENA"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodSnack
           title={"Snack"}
           onPress={() => {
             navigate(Routes.AddFood);

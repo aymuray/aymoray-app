@@ -1,6 +1,11 @@
 import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
 import ListDetailRecipes from "modules/ListDetailRecipes";
+import EditSport from "modules/EditPerfil/EditSport";
+import EditWeight from "modules/EditPerfil/EditWeight";
+import EditTrainingLevel from "modules/EditPerfil/EditTrainingLevel";
+import EditSex from "modules/EditPerfil/EditSex";
+import ListExercise from "modules/ListExercise";
 
 const Routes = {
   Walkthoughs: "Walkthoughs",
@@ -80,6 +85,13 @@ const Routes = {
   GenerateRecipe: "GenerateRecipe",
   ListRecipes: "ListRecipes",
   ListDetailRecipes: "ListDetailRecipes",
+  EditSport: "EditSport",
+  EditWeight: "EditWeight",
+  EditTrainingLevel: "EditTrainingLevel",
+  EditSex: "EditSex",
+  EditHeight: "EditHeight",
+  EditName: "EditName",
+  ListExercise: "ListExercise",
 };
 
 export default Routes;

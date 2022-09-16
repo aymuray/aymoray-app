@@ -1,9 +1,13 @@
-import React, { memo } from "react";
+import React, {memo, useEffect, useState} from "react";
 import Svg, { Path, Text } from "react-native-svg";
-import { View, StyleSheet } from "react-native";
+import {View, StyleSheet, LogBox} from "react-native";
 import { drawArc } from "./helper";
 import Animated from "react-native-reanimated";
 import { Colors } from "react-native-ui-lib";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth, db} from "config/fb";
+import {doc, getDoc} from "firebase/firestore";
+import {useIsFocused} from "@react-navigation/native";
 
 const { PI } = Math;
 const { multiply } = Animated;
@@ -52,6 +56,24 @@ const Anemometer = memo(
     const totalAngle = (3 * PI) / 2;
     const alpha = (value * totalAngle) / maxValue;
     const currentAngle = alpha - totalAngle;
+    const [uid, setUid] = useState('');
+    const [caloriaObjetivo, setCaloriaObjetivo] = useState('');
+    const isFocused = useIsFocused();
+
+
+     useEffect(async () => {
+         if(isFocused){
+             onAuthStateChanged(auth, (user) => {
+                 if (user) {
+                     setUid(user.uid);
+                 }
+             })
+             const docRef = doc(db, "usuarios", uid);
+             const docSnap = await getDoc(docRef);
+             setCaloriaObjetivo(parseInt(docSnap.data().GET))
+         }
+      LogBox.ignoreLogs(["timer"]);
+      }, [uid]);
 
     const strokeDashoffset = multiply(currentAngle, radius);
 
