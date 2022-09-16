@@ -13,33 +13,14 @@ const More = () => {
   const { navigate } = useNavigation();
   const DATA = [
     {
-      icon: Assets.icons.ic_upgrade_pro,
-      title: "Actualizar Pro",
-    },
-    {
       icon: Assets.icons.ic_my_profile,
       title: "Mi perfil",
       onPress: () => navigate(Routes.MyProfile),
     },
     {
-      icon: Assets.icons.ic_my_food,
-      title: "Mis comidas y recetas",
-      onPress: () => navigate(Routes.MyFoodAndRecipe),
-    },
-    {
       icon: Assets.icons.ic_graph,
       title: "Graficos",
       onPress: () => navigate(Routes.Graph),
-    },
-    {
-      icon: Assets.icons.ic_watch,
-      title: "Aplicaciones y dispositivos",
-      onPress: () => navigate(Routes.AppsAndDevices),
-    },
-    {
-      icon: Assets.icons.ic_blog,
-      title: "Blog",
-      onPress: () => navigate(Routes.Blog),
     },
     {
       icon: Assets.icons.ic_help,
@@ -71,7 +52,7 @@ const More = () => {
   ];
   return (
     <View flex backgroundColor={Colors.background}>
-      <Header title={"More"} />
+      <Header title={"Ajustes"} />
       <ScrollView>
         <View flex row style={{ flexWrap: "wrap", paddingTop: 16 }}>
           {DATA.map((item, index) => {

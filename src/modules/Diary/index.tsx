@@ -5,8 +5,8 @@ import SegmentedRoundDisplay from "components/SegmentedRoundDisplay";
 import { FONTS } from "config/FoundationConfig";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
-import React, {useEffect, useState} from "react";
-import {LogBox, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
+import React, { useEffect, useState } from "react";
+import { LogBox, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import {
   Text,
@@ -21,12 +21,16 @@ import BoxFood from "./components/BoxFood";
 import BoxWater from "./components/BoxWater";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
+
+import BoxFoodAlmuerzo from "modules/Diary/components/BoxFoodAlmuerzo";
+import BoxFoodDesayuno from "modules/Diary/components/BoxFoodDesayuno";
+import BoxFoodSnack from "modules/Diary/components/BoxFoodSnack";
+import BoxTraining from "modules/Diary/components/BoxTraining";
 import {doc, getDoc, getDocs, query, collection, where} from "firebase/firestore";
 import ListDetailRecipes from "modules/ListDetailRecipes";
 import ListDashboardRecipes from "modules/ListDashboardRecipes";
-
-//AGREGADO
 import { useIsFocused } from '@react-navigation/native';
+
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -34,7 +38,58 @@ const Diary = () => {
   const [user, setUser] = useState(null);
   const [peso, setPeso] = useState('');
   const [uid, setUid] = useState('');
+  const [grasaCoporal, setGrasaCoporal] = useState('');
+  const [fechaPeso, setFechaPeso] = useState('');
 
+  interface RoundDisplayData {
+    nutrientTitle: string;
+    nutrientEaten: number;
+    nutrientTotal: number;
+    description: string;
+  }
+  const [roundDisplayData, setRoundDisplayData] = useState<RoundDisplayData[]>([
+    {
+      nutrientTitle: 'Calorías',
+      nutrientEaten: 180,
+      nutrientTotal: 300,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Proteínas',
+      nutrientEaten: 250,
+      nutrientTotal: 500,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Grasas',
+      nutrientEaten: 50,
+      nutrientTotal: 150,
+      description: '',
+    },
+  ]);
+
+  const [nutrientRef, setNutrienRef] = useState<number>(0);
+
+  const nextNutrient = () => {
+    if (nutrientRef === 0) {
+      setNutrienRef(nutrientRef + 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef + 1);
+    } else {
+      setNutrienRef(0);
+    }
+  }
+
+  const previusNutrient = () => {
+    if (nutrientRef === 2) {
+      setNutrienRef(nutrientRef - 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef - 1);
+    } else {
+      setNutrienRef(2);
+    }
+  }
+  
   // Agregado
   const [recipes, setRecipes] = useState([]);
   const isFocused = useIsFocused();
@@ -80,8 +135,6 @@ const getRecipe = async () => {
     setIsRefreshing(true);
 };
 
-//--------------------------------
-
   useEffect(async () => {
       onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -90,12 +143,22 @@ const getRecipe = async () => {
           }
       })
 
+  useEffect(async () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName);
+        setUid(user.uid);
+      }
+    })
       const docRef = doc(db, "usuarios", uid);
       const docSnap = await getDoc(docRef);
       setUser(docSnap.data());
+      setFechaPeso(docSnap.data().UltimaAltulizacionPeso.toDate().toLocaleDateString('es-ES'))
+      setGrasaCoporal(parseInt(docSnap.data().GC))
       setPeso(docSnap.data().peso);
       LogBox.ignoreLogs(["timer"]);
   }, [uid]);
+
   return (
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
       <Image
@@ -139,11 +202,11 @@ const getRecipe = async () => {
           <View width={1} backgroundColor={Colors.line} />
           <View paddingV-16 paddingL-16 flex>
             <Text R16 color6D>
-              Latest weight, Jan 22
+              ultima actualizacion de peso, {fechaPeso}
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
-                  {peso} {" "}
+                {peso} {" "}
                 <Text R18 color28>
                   kg
                 </Text>
@@ -177,11 +240,11 @@ const getRecipe = async () => {
               alignItems: "center",
             }}
           >
-            <Button iconSource={Assets.icons.btn_back_day} />
+            <Button onPress={() => previusNutrient()} iconSource={Assets.icons.btn_back_day} />
             <Text R14 color28>
-              Hoy
+              {roundDisplayData[nutrientRef].nutrientTitle}
             </Text>
-            <Button iconSource={Assets.icons.btn_next_day} />
+            <Button onPress={() => nextNutrient()} iconSource={Assets.icons.btn_next_day} />
           </View>
           <View
             row
@@ -198,14 +261,26 @@ const getRecipe = async () => {
               }}
             >
               <Text M24 color28>
-                1317
+                {roundDisplayData[nutrientRef].nutrientEaten}
               </Text>
               <Text R14 color6D>
-                Comido
+                Grasa
               </Text>
+                <Text R14 color6D>
+                    Coporal
+                </Text>
             </View>
             <View height={133} width={133}>
-              <SegmentedRoundDisplay />
+              <SegmentedRoundDisplay
+                data={roundDisplayData[nutrientRef].nutrientEaten}
+                maxValue={roundDisplayData[nutrientRef].nutrientTotal}
+                width={133}
+                size={130}
+                strokeWidth={6}
+                numberOfSection={4}
+                startAngle={-55}
+                endAngle={235}
+                dataTitleFaltante={roundDisplayData[nutrientRef].nutrientTitle + ' restante'} />
               <TouchableOpacity
                 style={{
                   position: "absolute",
@@ -233,11 +308,14 @@ const getRecipe = async () => {
               }}
             >
               <Text M24 color28>
-                768
+                  18 %
               </Text>
               <Text R14 color6D>
-                Quemado
+                requisito
               </Text>
+                <Text R14 color6D>
+                    minimo
+                </Text>
             </View>
           </View>
         </View>
@@ -264,7 +342,7 @@ const getRecipe = async () => {
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
             <Text H14 color28 uppercase>
-               Plan de entrenamiento
+              Plan de entrenamiento
             </Text>
             <Button
               iconSource={Assets.icons.ic_add_16}
@@ -279,24 +357,31 @@ const getRecipe = async () => {
           <ItemWorkOutPlan />
         </View>
         <BoxFood
+        <BoxTraining
+          title={"Plan de entrenamiento"}
+          onPress={() => {
+              navigate(Routes.AddFood);
+          }}/>
+        <BoxFoodDesayuno
+
           title={"DESAYUNO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"ALMUERZO"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodAlmuerzo
           title={"CENA"}
           onPress={() => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxFood
+        <BoxFoodSnack
           title={"Snack"}
           onPress={() => {
             navigate(Routes.AddFood);

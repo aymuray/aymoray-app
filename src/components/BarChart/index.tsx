@@ -1,8 +1,12 @@
 import { FONTS } from "config/FoundationConfig";
 import { width } from "config/scaleAccordingToDevice";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { View, Colors } from "react-native-ui-lib";
 import { VictoryChart, VictoryAxis, VictoryBar } from "victory-native";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth, db} from "config/fb";
+import {collection, getDocs, query, where} from "firebase/firestore";
+import {useIsFocused} from "@react-navigation/native";
 class BarChart extends React.PureComponent {
   render() {
     const data = [
@@ -34,7 +38,7 @@ class BarChart extends React.PureComponent {
           padding={{ top: -40, bottom: 40, left: 40, right: 20 }}
         >
           <VictoryAxis
-            tickFormat={["Fat", "Carbs", "Protein", "Others"]}
+            tickFormat={["Desayuno", "Almuerzo", "Cena", "Snack"]}
             style={{
               axis: { stroke: "#E9E9E9" },
               axisLabel: { fontSize: 20, padding: 20 },
