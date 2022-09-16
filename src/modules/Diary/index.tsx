@@ -5,8 +5,8 @@ import SegmentedRoundDisplay from "components/SegmentedRoundDisplay";
 import { FONTS } from "config/FoundationConfig";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
-import React, {useEffect, useState} from "react";
-import {LogBox, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
+import React, { useEffect, useState } from "react";
+import { LogBox, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import {
   Text,
@@ -36,14 +36,62 @@ const Diary = () => {
   const [grasaCoporal, setGrasaCoporal] = useState('');
   const [fechaPeso, setFechaPeso] = useState('');
 
-  useEffect(async () => {
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              setName(user.displayName);
-              setUid(user.uid);
-          }
-      })
+  interface RoundDisplayData {
+    nutrientTitle: string;
+    nutrientEaten: number;
+    nutrientTotal: number;
+    description: string;
+  }
+  const [roundDisplayData, setRoundDisplayData] = useState<RoundDisplayData[]>([
+    {
+      nutrientTitle: 'Calorías',
+      nutrientEaten: 180,
+      nutrientTotal: 300,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Proteínas',
+      nutrientEaten: 250,
+      nutrientTotal: 500,
+      description: '',
+    },
+    {
+      nutrientTitle: 'Grasas',
+      nutrientEaten: 50,
+      nutrientTotal: 150,
+      description: '',
+    },
+  ]);
 
+  const [nutrientRef, setNutrienRef] = useState<number>(0);
+
+  const nextNutrient = () => {
+    if (nutrientRef === 0) {
+      setNutrienRef(nutrientRef + 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef + 1);
+    } else {
+      setNutrienRef(0);
+    }
+  }
+
+  const previusNutrient = () => {
+    if (nutrientRef === 2) {
+      setNutrienRef(nutrientRef - 1);
+    } else if (nutrientRef === 1) {
+      setNutrienRef(nutrientRef - 1);
+    } else {
+      setNutrienRef(2);
+    }
+  }
+
+  useEffect(async () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName);
+        setUid(user.uid);
+      }
+    })
       const docRef = doc(db, "usuarios", uid);
       const docSnap = await getDoc(docRef);
       setUser(docSnap.data());
@@ -100,7 +148,7 @@ const Diary = () => {
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
-                  {peso} {" "}
+                {peso} {" "}
                 <Text R18 color28>
                   kg
                 </Text>
@@ -134,11 +182,11 @@ const Diary = () => {
               alignItems: "center",
             }}
           >
-            <Button iconSource={Assets.icons.btn_back_day} />
+            <Button onPress={() => previusNutrient()} iconSource={Assets.icons.btn_back_day} />
             <Text R14 color28>
-              Hoy
+              {roundDisplayData[nutrientRef].nutrientTitle}
             </Text>
-            <Button iconSource={Assets.icons.btn_next_day} />
+            <Button onPress={() => nextNutrient()} iconSource={Assets.icons.btn_next_day} />
           </View>
           <View
             row
@@ -155,7 +203,7 @@ const Diary = () => {
               }}
             >
               <Text M24 color28>
-                  {grasaCoporal} %
+                {roundDisplayData[nutrientRef].nutrientEaten}
               </Text>
               <Text R14 color6D>
                 Grasa
@@ -165,7 +213,16 @@ const Diary = () => {
                 </Text>
             </View>
             <View height={133} width={133}>
-              <SegmentedRoundDisplay />
+              <SegmentedRoundDisplay
+                data={roundDisplayData[nutrientRef].nutrientEaten}
+                maxValue={roundDisplayData[nutrientRef].nutrientTotal}
+                width={133}
+                size={130}
+                strokeWidth={6}
+                numberOfSection={4}
+                startAngle={-55}
+                endAngle={235}
+                dataTitleFaltante={roundDisplayData[nutrientRef].nutrientTitle + ' restante'} />
               <TouchableOpacity
                 style={{
                   position: "absolute",
@@ -204,13 +261,51 @@ const Diary = () => {
             </View>
           </View>
         </View>
-
+        <View
+          marginH-16
+          marginB-16
+          style={{
+            borderRadius: 6,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            elevation: 3,
+          }}
+          backgroundColor={Colors.white}
+        >
+          <View
+            row
+            paddingH-16
+            paddingV-12
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
+            <Text H14 color28 uppercase>
+              Plan de entrenamiento
+            </Text>
+            <Button
+              iconSource={Assets.icons.ic_add_16}
+              label={"Añadir plan"}
+              link
+              color={Colors.buttonLink}
+              labelStyle={{ fontSize: 14, fontFamily: FONTS.medium }}
+              onPress={() => navigate(Routes.WorkoutSchedule)}
+            />
+          </View>
+          <View height={1} backgroundColor={Colors.line} />
+          <ItemWorkOutPlan />
+        </View>
+        <BoxFood
         <BoxTraining
           title={"Plan de entrenamiento"}
           onPress={() => {
               navigate(Routes.AddFood);
           }}/>
         <BoxFoodDesayuno
+
           title={"DESAYUNO"}
           onPress={() => {
             navigate(Routes.AddFood);
