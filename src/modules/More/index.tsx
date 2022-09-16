@@ -8,6 +8,7 @@ import { View, Colors, Assets, Image, Text } from "react-native-ui-lib";
 import {auth} from "config/fb";
 import {signOut} from "firebase/auth";
 import HeaderWithSearch from "components/HeaderWithSearch";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const widthItem = (width - 48) / 2;
 const More = () => {
@@ -57,7 +58,7 @@ const More = () => {
         <View flex row style={{ flexWrap: "wrap", paddingTop: 16 }}>
           {DATA.map((item, index) => {
             return (
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 key={index}
                 style={{
                   width: widthItem,
@@ -75,7 +76,7 @@ const More = () => {
                 <Text M14 color28 marginT-16>
                   {item.title}
                 </Text>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             );
           })}
         </View>
