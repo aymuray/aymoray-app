@@ -94,6 +94,7 @@ const BoxFoodDesayuno = ({ title, onPress }) => {
           </Text>
 
         </View>
+        <View height={1} backgroundColor={Colors.line} />
         {recipes.length == 1 ?
             <View>
               <View height={1} backgroundColor={Colors.line} />
@@ -101,9 +102,7 @@ const BoxFoodDesayuno = ({ title, onPress }) => {
               <View height={1} backgroundColor={Colors.line} />
               <ItemIngredient dataRecipe={recipes[0].data.Recetas.desayuno.segundoElemento}/>
               <View height={1} backgroundColor={Colors.line} />
-            </View>
-            : null }
-        <View
+              <View
           paddingT-16
           paddingB-12
           paddingH-16
@@ -120,6 +119,21 @@ const BoxFoodDesayuno = ({ title, onPress }) => {
             Solo los alimentos cocidos
           </Text>
         </View>
+            </View>
+            :<View
+            paddingT-16
+            paddingB-12
+            paddingH-16
+            row
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+        >
+          <View row style={{ alignItems: "center" }}>
+            {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+          </View>
+          <Text R14 color6D>
+              Vaya, esto es lamentable 😒
+            </Text>
+        </View>}
       </View>
     </TouchableHighlight>
   );

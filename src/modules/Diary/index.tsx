@@ -62,7 +62,7 @@ const Diary = () => {
       <ScrollView>
         <ButtonIconBadge source={Assets.icons.ic_notification} label={"2"} />
         <View row paddingL-16>
-          <Avatar source={Assets.icons.avatar} size={48} />
+          {/* <Avatar source={Assets.icons.avatar} size={48} /> */}
           <Text R14 contentW style={{ paddingLeft: 16 }}>
             Hola <Text B14>{name}</Text>,{"\n"}Las cosas se ven bien.
           </Text>
@@ -96,7 +96,7 @@ const Diary = () => {
           <View width={1} backgroundColor={Colors.line} />
           <View paddingV-16 paddingL-16 flex>
             <Text R16 color6D>
-              ultima actualizacion de peso, {fechaPeso}
+              ultima actualizacion de peso  {fechaPeso}
             </Text>
             <View row centerV>
               <Text M36 color28 marginR-16>
@@ -234,7 +234,7 @@ const Diary = () => {
             navigate(Routes.AddFood);
           }}
         />
-        <BoxWater title={"Agua"} />
+        {/* <BoxWater title={"Agua"} /> */}
       </ScrollView>
     </View>
   );

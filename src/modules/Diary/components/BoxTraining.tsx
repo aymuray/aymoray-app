@@ -255,7 +255,7 @@ const BoxTraining = ({ title, onPress }) => {
               </View>
               : null }
           <View height={1} backgroundColor={Colors.line} />
-          <View
+          {exercise.length != 0 ? <View
               paddingT-16
               paddingB-12
               paddingH-16
@@ -264,14 +264,25 @@ const BoxTraining = ({ title, onPress }) => {
           >
             <View row style={{ alignItems: "center" }}>
               <Text M24 color28 marginR-8>
-                {sumaCal} Cal
+                {sumaCal} Cal {exercise}
               </Text>
               <Image source={Assets.icons.ic_nutrition_info} />
             </View>
+          </View>:<View
+              paddingT-16
+              paddingB-12
+              paddingH-16
+              row
+              style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
+            <View row style={{ alignItems: "center" }}>
+              {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+            </View>
             <Text R14 color6D>
-              Porciones de 100 gramos
-            </Text>
-          </View>
+                Vemos que tienes un día libre 👀
+              </Text>
+          </View>}
+          
         </View>
       </TouchableHighlight>
   );

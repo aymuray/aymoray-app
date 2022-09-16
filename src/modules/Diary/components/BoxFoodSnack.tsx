@@ -101,9 +101,7 @@ const BoxFoodSnack = ({ title, onPress }) => {
               <View height={1} backgroundColor={Colors.line} />
               <ItemIngredient dataRecipe={recipes[0].data.Recetas.snack.segundoElemeto}/>
               <View height={1} backgroundColor={Colors.line} />
-            </View>
-            : null }
-        <View
+              <View
           paddingT-16
           paddingB-12
           paddingH-16
@@ -120,6 +118,22 @@ const BoxFoodSnack = ({ title, onPress }) => {
             Porciones de 100 gramos
           </Text>
         </View>
+            </View>
+            : <View
+            paddingT-16
+            paddingB-12
+            paddingH-16
+            row
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+        >
+          <View row style={{ alignItems: "center" }}>
+            {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+          </View>
+          <Text R14 color6D>
+              No hay snacks 🤨
+            </Text>
+        </View>}
+
       </View>
     </TouchableHighlight>
   );
