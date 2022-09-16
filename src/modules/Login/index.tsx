@@ -20,8 +20,6 @@ const Login = () => {
   const onLogin = React.useCallback(async (data) => {
       setLoginFirebase('')
       await signInWithEmailAndPassword (auth, data.email.replace(" ",""), data.password).then( ()=>{
-          setValue('email', '');
-          setValue('password', '');
           navigate(Routes.MainTab);
       }).catch( error =>{
           console.log(error.message)
@@ -45,7 +43,7 @@ const Login = () => {
   }, []);
 
 
-  const {control, getValues, setValue,  handleSubmit, formState: { errors } } = useForm({
+  const {control, getValues, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       email: '',
       password: '',
