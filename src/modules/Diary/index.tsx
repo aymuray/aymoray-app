@@ -21,7 +21,12 @@ import BoxFood from "./components/BoxFood";
 import BoxWater from "./components/BoxWater";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
-import {doc, getDoc} from "firebase/firestore";
+import {doc, getDoc, getDocs, query, collection, where} from "firebase/firestore";
+import ListDetailRecipes from "modules/ListDetailRecipes";
+import ListDashboardRecipes from "modules/ListDashboardRecipes";
+
+//AGREGADO
+import { useIsFocused } from '@react-navigation/native';
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -29,6 +34,53 @@ const Diary = () => {
   const [user, setUser] = useState(null);
   const [peso, setPeso] = useState('');
   const [uid, setUid] = useState('');
+
+  // Agregado
+  const [recipes, setRecipes] = useState([]);
+  const isFocused = useIsFocused();
+  const [IsRefreshing, setIsRefreshing] = useState(true);
+
+  useEffect(() => {
+    if (isFocused) {
+        console.log('In inFocused Block', isFocused);
+        getRecipe();
+    }
+}, [ isFocused ,uid]);
+
+const getRecipe = async () => {
+    console.log('entre')
+    try {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUid(user.uid);
+            }
+        })
+        const q = query(collection(db, "Menus"), where("idUser", "==", uid));
+
+        let temp = []
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            temp.push(
+                {
+                    id: doc.id,
+                    data: doc.data(),
+                }
+            )
+        });
+        console.log('cantidad local', recipes.length);
+        console.log('cantidad firebase', temp.length);
+        if (recipes.length != temp.length) {
+            setRecipes(temp);
+            console.log('----se actualizo--------')
+        }
+        setIsRefreshing(false);
+    }catch (e){
+        console.log(e);
+    }
+    setIsRefreshing(true);
+};
+
+//--------------------------------
 
   useEffect(async () => {
       onAuthStateChanged(auth, (user) => {
@@ -251,6 +303,9 @@ const Diary = () => {
           }}
         />
         <BoxWater title={"Agua"} />
+ 
+        {/* <ListDashboardRecipes dataRecipe={} /> */}
+        
       </ScrollView>
     </View>
   );

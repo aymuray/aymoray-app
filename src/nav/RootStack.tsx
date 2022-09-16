@@ -63,9 +63,7 @@ import ForgotPassword from "modules/ForgotPassword";
 import GenerateRecipe from "modules/GenerateRecipe";
 import ListRecipes from "modules/ListRecipes";
 import ListDetailRecipes from "modules/ListDetailRecipes";
-<<<<<<< HEAD
 import { SettingScreen } from "modules/Settings/SettingScreen";
-=======
 import EditSport from "modules/EditPerfil/EditSport";
 import EditWeight from "modules/EditPerfil/EditWeight";
 import EditTrainingLevel from "modules/EditPerfil/EditTrainingLevel";
@@ -73,7 +71,6 @@ import EditSex from "modules/EditPerfil/EditSex";
 import EditHeight from "modules/EditPerfil/EditHeight";
 import EditName from "modules/EditPerfil/EditName";
 import ListExercise from "modules/ListExercise";
->>>>>>> master
 const { Navigator, Screen } = createStackNavigator();
 const RootStack = () => {
   return (
