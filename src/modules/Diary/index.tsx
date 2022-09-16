@@ -21,11 +21,16 @@ import BoxFood from "./components/BoxFood";
 import BoxWater from "./components/BoxWater";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
-import {doc, getDoc} from "firebase/firestore";
+
 import BoxFoodAlmuerzo from "modules/Diary/components/BoxFoodAlmuerzo";
 import BoxFoodDesayuno from "modules/Diary/components/BoxFoodDesayuno";
 import BoxFoodSnack from "modules/Diary/components/BoxFoodSnack";
 import BoxTraining from "modules/Diary/components/BoxTraining";
+import {doc, getDoc, getDocs, query, collection, where} from "firebase/firestore";
+import ListDetailRecipes from "modules/ListDetailRecipes";
+import ListDashboardRecipes from "modules/ListDashboardRecipes";
+import { useIsFocused } from '@react-navigation/native';
+
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -84,6 +89,59 @@ const Diary = () => {
       setNutrienRef(2);
     }
   }
+  
+  // Agregado
+  const [recipes, setRecipes] = useState([]);
+  const isFocused = useIsFocused();
+  const [IsRefreshing, setIsRefreshing] = useState(true);
+
+  useEffect(() => {
+    if (isFocused) {
+        console.log('In inFocused Block', isFocused);
+        getRecipe();
+    }
+}, [ isFocused ,uid]);
+
+const getRecipe = async () => {
+    console.log('entre')
+    try {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUid(user.uid);
+            }
+        })
+        const q = query(collection(db, "Menus"), where("idUser", "==", uid));
+
+        let temp = []
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            temp.push(
+                {
+                    id: doc.id,
+                    data: doc.data(),
+                }
+            )
+        });
+        console.log('cantidad local', recipes.length);
+        console.log('cantidad firebase', temp.length);
+        if (recipes.length != temp.length) {
+            setRecipes(temp);
+            console.log('----se actualizo--------')
+        }
+        setIsRefreshing(false);
+    }catch (e){
+        console.log(e);
+    }
+    setIsRefreshing(true);
+};
+
+  useEffect(async () => {
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              setName(user.displayName);
+              setUid(user.uid);
+          }
+      })
 
   useEffect(async () => {
     onAuthStateChanged(auth, (user) => {
@@ -330,6 +388,9 @@ const Diary = () => {
           }}
         />
         <BoxWater title={"Agua"} />
+ 
+        {/* <ListDashboardRecipes dataRecipe={} /> */}
+        
       </ScrollView>
     </View>
   );

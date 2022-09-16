@@ -85,6 +85,7 @@ const Routes = {
   GenerateRecipe: "GenerateRecipe",
   ListRecipes: "ListRecipes",
   ListDetailRecipes: "ListDetailRecipes",
+  Settings: "Settings",
   EditSport: "EditSport",
   EditWeight: "EditWeight",
   EditTrainingLevel: "EditTrainingLevel",
