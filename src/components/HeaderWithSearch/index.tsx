@@ -50,7 +50,7 @@ const HeaderWithSearch = ({
     <View>
             <Image
         source={Assets.icons.bg_tab}
-        style={{ position: "absolute", width: width }}
+        style={{ position: "absolute", width: width, height: 300}}
       />
       <View style={styles.container}>
       <View

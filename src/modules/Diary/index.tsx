@@ -57,7 +57,7 @@ const Diary = () => {
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
       <Image
         source={Assets.icons.bg_tab}
-        style={{ position: "absolute", width: width }}
+        style={{ position: "absolute", width: width, height: 300}}
       />
       <ScrollView>
         {/* <ButtonIconBadge source={Assets.icons.ic_notification} label={"2"} /> */}
