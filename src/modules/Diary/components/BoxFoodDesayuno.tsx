@@ -61,7 +61,7 @@ const BoxFoodDesayuno = ({ title, onPress }) => {
 
 
   return (
-    <TouchableHighlight
+    <View
       underlayColor={"rgb(0,0,0)"}
       onPress={() => {
         navigate(Routes.BreakfastDetail);
@@ -135,7 +135,7 @@ const BoxFoodDesayuno = ({ title, onPress }) => {
             </Text>
         </View>}
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { FONTS } from "config/FoundationConfig";
 import React, { ReactNode, useCallback } from "react";
+import { width } from "config/scaleAccordingToDevice";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -46,7 +47,12 @@ const HeaderWithSearch = ({
     );
   }, [btnLeft]);
   return (
-    <View style={styles.container}>
+    <View>
+            <Image
+        source={Assets.icons.bg_tab}
+        style={{ position: "absolute", width: width }}
+      />
+      <View style={styles.container}>
       <View
         row
         paddingH-16
@@ -60,7 +66,7 @@ const HeaderWithSearch = ({
           {left()}
         </View>
         <View flex centerH centerV>
-          <Text H16 color28>
+          <Text H16 line>
             {title}
           </Text>
         </View>
@@ -68,65 +74,9 @@ const HeaderWithSearch = ({
           {btnRight}
         </View>
       </View>
-      <View padding-16>
-        {onPress ? (
-          <TouchableOpacity onPress={onPress}>
-            <View
-              height={44}
-              row
-              paddingH-16
-              paddingV-11
-              style={{
-                borderWidth: 1,
-                borderColor: Colors.line,
-                borderRadius: 4,
-                alignItems: "center",
-              }}
-            >
-              <Image source={Assets.icons.ic_search_16} />
-              <Text R16 color6D marginL-16>
-                {placeholder || "Search exercise"}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <View
-            height={44}
-            row
-            paddingH-16
-            paddingV-11
-            style={{
-              borderWidth: 1,
-              borderColor: Colors.line,
-              borderRadius: 4,
-              alignItems: "center",
-            }}
-          >
-            <Image source={Assets.icons.ic_search_16} />
-            <TextInput
-              style={{
-                fontSize: 16,
-                fontFamily: FONTS.heavy,
-                marginLeft: 16,
-                color: Colors.color28,
-                flex: 1,
-              }}
-              placeholder={"Search exercise"}
-              placeholderTextColor={Colors.color6D}
-              value={value}
-              onChangeText={onChangeText}
-              underlineColorAndroid={"transparent"}
-            />
-            <Button
-              iconSource={Assets.icons.ic_close_search}
-              link
-              color={Colors.color28}
-              onPress={onClearText}
-            />
-          </View>
-        )}
-      </View>
     </View>
+    </View>
+    
   );
 };
 
@@ -134,17 +84,8 @@ export default HeaderWithSearch;
 
 const styles = StyleSheet.create({
   container: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 2,
     marginTop: Platform.OS === "android" ? 30 : 0,
     paddingTop: Platform.OS === "ios" ? getStatusBarHeight(true) : 0,
-    backgroundColor: Colors.white,
     zIndex: 100,
   },
 });

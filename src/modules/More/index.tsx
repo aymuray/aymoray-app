@@ -7,6 +7,7 @@ import { StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { View, Colors, Assets, Image, Text } from "react-native-ui-lib";
 import {auth} from "config/fb";
 import {signOut} from "firebase/auth";
+import HeaderWithSearch from "components/HeaderWithSearch";
 
 const widthItem = (width - 48) / 2;
 const More = () => {
@@ -51,7 +52,7 @@ const More = () => {
   ];
   return (
     <View flex backgroundColor={Colors.background}>
-      <Header title={"Ajustes"} />
+      <HeaderWithSearch title={"Ajustes"} />
       <ScrollView>
         <View flex row style={{ flexWrap: "wrap", paddingTop: 16 }}>
           {DATA.map((item, index) => {
