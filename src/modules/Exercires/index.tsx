@@ -9,6 +9,8 @@ import BoxExercire from "./components/BoxExercire";
 import Box from "components/Box";
 import PieChart from "components/PieChart";
 import ListExercise from "modules/ListExercise";
+import DaysExercise from "components/DaysExercise/DaysExercise";
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const widthItem = (width - 48) / 2;
 const Exercires = () => {
   const { navigate } = useNavigation();
@@ -29,9 +31,9 @@ const Exercires = () => {
   }, []);
   return (
     <View flex>
-      <HeaderWithSearch title="Mis Ejercicios" onPress={goSearchExercires} />
+      <HeaderWithSearch title="Mis Ejercicios"/>
       <ScrollView>
-        <View height={16} />
+        <DaysExercise/>
         <Box>
           <Text M14 color6D marginH-24 marginT-24 center>
             Tu porcentaje de ejercicio
@@ -40,14 +42,13 @@ const Exercires = () => {
         </Box>
         <View
           row
-          paddingT-16
           style={{
             flexWrap: "wrap",
           }}
         >
           {DATA.map((item, index) => {
             return (
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 key={index}
                 style={{
                   width: widthItem,
@@ -65,11 +66,10 @@ const Exercires = () => {
                 <Text M14 color28 marginT-16>
                   {item.title}
                 </Text>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             );
           })}
         </View>
-        {/*<BoxExercire title={"YOUR recent added"} />*/}
       </ScrollView>
     </View>
   );

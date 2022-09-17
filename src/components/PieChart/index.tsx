@@ -57,11 +57,7 @@ const PieChart = () => {
   ]);
 
   useEffect(() => { 
-    if (isFocused) {
-        console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
         getExercices();
-
-    }
   }, [uid, isFocused]);
 
   const getExercices = async () => {
