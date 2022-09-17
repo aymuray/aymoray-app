@@ -2,10 +2,11 @@ import Tag from "components/Tag";
 import React from "react";
 import { View, Image, Text, Colors, Assets } from "react-native-ui-lib";
 import SwipeableItem from "components/SwipeableItem/SwipeableItem";
-const ItemWorkOutPlan = ({ejercicio}) => {
+import SwipeableExer from "components/SwipeableExer/SwipeableExer";
+const ItemWorkOutPlan = ({ejercicio, dia, getExercices}) => {
   return (
     ejercicio ?
-    <SwipeableItem>
+    <SwipeableExer dataExercise={ejercicio} dia={dia} getExercices={getExercices}>
       <View padding-16>
         <View row style={{ alignItems: "center" }}>
           <Tag size={8} color={Colors.color58} />
@@ -31,7 +32,7 @@ const ItemWorkOutPlan = ({ejercicio}) => {
           </View>
         </View>
       </View>
-    </SwipeableItem>:null
+    </SwipeableExer>:null
   );
 };
 

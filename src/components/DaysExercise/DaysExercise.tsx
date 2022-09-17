@@ -7,12 +7,14 @@ import { Assets, Colors, View, Text, Button } from "react-native-ui-lib";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "config/fb";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useIsFocused } from '@react-navigation/native';
 
 const days = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sábado','Domingo',]
 
 const DaysExercise = () => {
 
     const [uid, setUid] = useState('');
+    const isFocused = useIsFocused();
     const [exercise, setExercise] = useState([]);
     const [currentDay, setCurrentDay] = useState(0);
     const [displayDay, setDisplayDay] = useState(0);
@@ -20,8 +22,8 @@ const DaysExercise = () => {
     useEffect(() => {
         let fecha = new Date();
         setCurrentDay(fecha.getDay());
-        getExercices();
-    }, [displayDay]);
+        getExercices()
+    }, [displayDay, isFocused]);
 
     function filterByDays(exersices, query) {
        return exersices.filter(exercise => exercise.dias.includes(query.toLowerCase()))
@@ -38,7 +40,7 @@ const DaysExercise = () => {
           const querySnapshot = await getDocs(q);
           let temp = []
           querySnapshot.forEach((doc) => {
-              temp.push(doc.data());
+              temp.push({...doc.data(), id: doc.id});
           });
           setExercise(filterByDays(temp, days[displayDay].normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
       } catch (e) {
@@ -47,9 +49,11 @@ const DaysExercise = () => {
     }
   
     const NextDay = () => {
+        setExercise([])
         displayDay > days.length - 2 ? setDisplayDay(0): setDisplayDay(displayDay+1)
     }
     const PreviusDay = () => {
+        setExercise([])
         displayDay === 0 ? setDisplayDay(days.length - 1): setDisplayDay(displayDay-1)
     }
   return (
@@ -83,10 +87,10 @@ const DaysExercise = () => {
             </Text>
             <Button iconSource={Assets.icons.btn_next_day} onPress={NextDay} />
           </View>
-          {exercise.length != 0 ? exercise.map((item) =>{return (
+          {exercise.length != 0 ? exercise.map((item, index) =>{return (
             <View>
             <View height={1} backgroundColor={Colors.line} />
-            <ItemWorkOutPlan ejercicio={item}/>
+            <ItemWorkOutPlan getExercices={getExercices} ejercicio={item} dia={days[displayDay].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()}/>
             </View>)
           }) :
           <View
