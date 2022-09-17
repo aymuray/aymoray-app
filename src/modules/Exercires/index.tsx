@@ -71,7 +71,6 @@ const Exercires = () => {
             );
           })}
         </View>
-        {/*<BoxExercire title={"YOUR recent added"} />*/}
       </ScrollView>
     </View>
   );

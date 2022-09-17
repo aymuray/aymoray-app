@@ -83,12 +83,22 @@ const DaysExercise = () => {
             </Text>
             <Button iconSource={Assets.icons.btn_next_day} onPress={NextDay} />
           </View>
-          {exercise.map((item) =>{return(
+          {exercise.length != 0 ? exercise.map((item) =>{return (
             <View>
             <View height={1} backgroundColor={Colors.line} />
             <ItemWorkOutPlan ejercicio={item}/>
             </View>)
-          })}
+          }) :
+          <View
+              paddingT-16
+              paddingB-12
+              paddingH-16
+              row
+              style={{ justifyContent: "center", alignItems: "center" }}
+          >
+            <View height={1} backgroundColor={Colors.line} />
+            <Text R14 color6D>Vemos que tienes un día libre 👀</Text>
+          </View>}
           </View>
   );
 };
