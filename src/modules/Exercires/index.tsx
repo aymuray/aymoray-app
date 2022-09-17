@@ -9,6 +9,7 @@ import BoxExercire from "./components/BoxExercire";
 import Box from "components/Box";
 import PieChart from "components/PieChart";
 import ListExercise from "modules/ListExercise";
+import DaysExercise from "components/DaysExercise/DaysExercise";
 const widthItem = (width - 48) / 2;
 const Exercires = () => {
   const { navigate } = useNavigation();
@@ -31,6 +32,7 @@ const Exercires = () => {
     <View flex>
       <HeaderWithSearch title="Mis Ejercicios" onPress={goSearchExercires} />
       <ScrollView>
+        <DaysExercise/>
         <View height={16} />
         <Box>
           <Text M14 color6D marginH-24 marginT-24 center>
