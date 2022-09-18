@@ -16,11 +16,11 @@ const Exercires = () => {
   const [change, setChange] = useState(false)
   const { navigate } = useNavigation();
   const DATA = [
-    {
-      icon: Assets.icons.ic_exercise_list,
-      title: "Lista de ejercicios",
-      onPress: () => navigate(Routes.ListExercise),
-    },
+    // {
+    //   icon: Assets.icons.ic_exercise_list,
+    //   title: "Lista de ejercicios",
+    //   onPress: () => navigate(Routes.ListExercise),
+    // },
     {
       icon: Assets.icons.ic_user_plan,
       title: "Agregar ejercicios",
@@ -50,9 +50,11 @@ const Exercires = () => {
           {DATA.map((item, index) => {
             return (
               <TouchableWithoutFeedback
+              marginH-16
+              marginB-16
                 key={index}
                 style={{
-                  width: widthItem,
+                  width: widthItem * 2 + 12,
                   height: (widthItem / 164) * 146,
                   borderRadius: 6,
                   marginLeft: 16,
