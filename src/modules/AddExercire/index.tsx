@@ -108,7 +108,7 @@ const AddExercire = () => {
   return (
     <View flex>
     <KeyboardAwareScrollView>
-      <HeaderWithSearch title={'Añadir Ejercico'}/>
+      <HeaderWithSearch title={'Añadir Ejercico'} back color="white"/>
           <View
               paddingT-0
               backgroundColor={Colors.white}
