@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import {auth, db} from "config/fb";
 import { doc, getDocs, query, collection, where } from "firebase/firestore";
 import { useIsFocused } from '@react-navigation/native';
-const PieChart = () => {
+const PieChart = ({change}) => {
   const isFocused = useIsFocused();
   const [total, setTotal] = useState(0);
   const [uid, setUid] = useState('');
@@ -58,7 +58,7 @@ const PieChart = () => {
 
   useEffect(() => { 
         getExercices();
-  }, [uid, isFocused]);
+  }, [isFocused,change]);
 
   const getExercices = async () => {
     console.log('///////////////entre//////////////////////');
