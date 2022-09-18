@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import HeaderWithSearch from "components/HeaderWithSearch";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { View, Assets, Colors, Image, Text } from "react-native-ui-lib";
 import BoxExercire from "./components/BoxExercire";
@@ -13,6 +13,7 @@ import DaysExercise from "components/DaysExercise/DaysExercise";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const widthItem = (width - 48) / 2;
 const Exercires = () => {
+  const [change, setChange] = useState(false)
   const { navigate } = useNavigation();
   const DATA = [
     {
@@ -33,12 +34,12 @@ const Exercires = () => {
     <View flex>
       <HeaderWithSearch title="Mis Ejercicios"/>
       <ScrollView>
-        <DaysExercise/>
+        <DaysExercise setChange={setChange} change={change}/>
         <Box>
           <Text M14 color6D marginH-24 marginT-24 center>
-            Tu porcentaje de ejercicio
+            Tu porcentaje de ejercicioss
           </Text>
-          <PieChart />
+          <PieChart change={change}/>
         </Box>
         <View
           row

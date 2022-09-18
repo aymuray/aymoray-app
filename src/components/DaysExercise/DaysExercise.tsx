@@ -11,7 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const days = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sábado','Domingo',]
 
-const DaysExercise = () => {
+const DaysExercise = ({setChange, change}) => {
 
     const [uid, setUid] = useState('');
     const isFocused = useIsFocused();
@@ -29,7 +29,8 @@ const DaysExercise = () => {
        return exersices.filter(exercise => exercise.dias.includes(query.toLowerCase()))
     }
     const getExercices = async () => {
-      console.log('++++++++++++++++entre');
+      setExercise([])
+      setChange(!change);
       try {
           onAuthStateChanged(auth, (user) => {
               if (user) {
@@ -49,11 +50,9 @@ const DaysExercise = () => {
     }
   
     const NextDay = () => {
-        setExercise([])
         displayDay > days.length - 2 ? setDisplayDay(0): setDisplayDay(displayDay+1)
     }
     const PreviusDay = () => {
-        setExercise([])
         displayDay === 0 ? setDisplayDay(days.length - 1): setDisplayDay(displayDay-1)
     }
   return (

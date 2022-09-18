@@ -6,7 +6,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import {auth, db} from "config/fb";
 import { doc, getDocs, query, collection, where } from "firebase/firestore";
 import { useIsFocused } from '@react-navigation/native';
-const PieChart = () => {
+import { width } from 'config/scaleAccordingToDevice';
+const PieChart = ({change}) => {
   const isFocused = useIsFocused();
   const [total, setTotal] = useState(0);
   const [uid, setUid] = useState('');
@@ -58,7 +59,7 @@ const PieChart = () => {
 
   useEffect(() => { 
         getExercices();
-  }, [uid, isFocused]);
+  }, [isFocused,change]);
 
   const getExercices = async () => {
     console.log('///////////////entre//////////////////////');
@@ -230,6 +231,7 @@ const PieChart = () => {
   }
 
   return (
+    total != 0 ?
     <View paddingV-24 paddingL-24 paddingR-16 row>
       <View
         style={{
@@ -271,7 +273,30 @@ const PieChart = () => {
           );
         })}
       </View>
-    </View>
+    </View> :
+    <View
+        style={{
+          height: 180,
+          width: 380,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <PieChartSvg
+          style={{ height: 180, width: 180, position: "absolute"}}
+          valueAccessor={({ item }) => item.amount}
+          data={dataGrafica}
+          outerRadius={"95%"}
+          innerRadius={"80%"}
+          padAngle={0.01}
+        />
+        <Text M36 color28>
+          {total}
+        </Text>
+        <Text R14 color6D>
+          Minutos
+        </Text>
+      </View>
   );
 };
 
