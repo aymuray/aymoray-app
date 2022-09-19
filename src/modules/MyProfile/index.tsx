@@ -79,26 +79,13 @@ const MyProfile = () => {
       <ScrollView>
         <Image
           source={Assets.icons.bg_tab}
-          style={{ position: "absolute", width: width }}
+          style={{ position: "absolute", width: width, height: 300, top: -50}}
         />
         <Header
           title="Tu perfil"
           back
           noShadow
           color="white"
-          btnRight={
-            <ButtonIconBadge
-              source={Assets.icons.ic_notification}
-              label={"2"}
-              style={{
-                marginTop: -10,
-                marginRight: -10,
-              }}
-              onPress={() => {
-                navigate(Routes.Notification);
-              }}
-            />
-          }
           style={{
             backgroundColor: "transparent",
           }}

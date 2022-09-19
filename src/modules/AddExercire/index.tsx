@@ -14,9 +14,10 @@ import {doc, addDoc, collection} from "firebase/firestore";
 import Routes from "config/Routes";
 import {useNavigation} from "@react-navigation/native";
 import Exercires from "modules/Exercires";
+import HeaderWithSearch from 'components/HeaderWithSearch';
 
 const AddExercire = () => {
-    const tipoEjercicio = ["aeróbico", "resistencia", "flexibilidad", "fortalecimiento "];
+    const tipoEjercicio = ["Aeróbico", "Resistencia", "Flexibilidad", "Fortalecimiento "];
     const DATA_DAY = [
         {day: 'Lu'},
         {day: 'Ma'},
@@ -107,8 +108,7 @@ const AddExercire = () => {
   return (
     <View flex>
     <KeyboardAwareScrollView>
-      <Header title={'Añadir Ejercico'} back />
-
+      <HeaderWithSearch title={'Añadir Ejercico'} back color="white"/>
           <View
               paddingT-0
               backgroundColor={Colors.white}
