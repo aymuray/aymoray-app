@@ -26,6 +26,7 @@ import BoxFoodAlmuerzo from "modules/Diary/components/BoxFoodAlmuerzo";
 import BoxFoodDesayuno from "modules/Diary/components/BoxFoodDesayuno";
 import BoxFoodSnack from "modules/Diary/components/BoxFoodSnack";
 import BoxTraining from "modules/Diary/components/BoxTraining";
+import {useIsFocused} from "@react-navigation/native";
 
 const Diary = () => {
   const { navigate } = useNavigation();
@@ -35,23 +36,26 @@ const Diary = () => {
   const [uid, setUid] = useState('');
   const [grasaCoporal, setGrasaCoporal] = useState('');
   const [fechaPeso, setFechaPeso] = useState('');
+  const isFocused = useIsFocused();
 
   useEffect(async () => {
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              setName(user.displayName);
-              setUid(user.uid);
-          }
-      })
+      if (isFocused) {
+          onAuthStateChanged(auth, (user) => {
+              if (user) {
+                  setName(user.displayName);
+                  setUid(user.uid);
+              }
+          })
 
-      const docRef = doc(db, "usuarios", uid);
-      const docSnap = await getDoc(docRef);
-      setUser(docSnap.data());
-      setFechaPeso(docSnap.data().UltimaAltulizacionPeso.toDate().toLocaleDateString('es-ES'))
-      setGrasaCoporal(parseInt(docSnap.data().GC))
-      setPeso(docSnap.data().peso);
-      LogBox.ignoreLogs(["timer"]);
-  }, [uid]);
+          const docRef = doc(db, "usuarios", uid);
+          const docSnap = await getDoc(docRef);
+          setUser(docSnap.data());
+          setFechaPeso(docSnap.data().UltimaAltulizacionPeso.toDate().toLocaleDateString('es-ES'))
+          setGrasaCoporal(parseInt(docSnap.data().GC))
+          setPeso(docSnap.data().peso);
+          LogBox.ignoreLogs(["timer"]);
+      }
+  }, [uid, isFocused]);
 
   return (
     <View flex style={{ paddingTop: getStatusBarHeight(true) }}>
@@ -234,7 +238,7 @@ const Diary = () => {
             navigate(Routes.AddFood);
           }}
         />
-        {/* <BoxWater title={"Agua"} /> */}
+         <BoxWater title={"Agua"} />
       </ScrollView>
     </View>
   );
