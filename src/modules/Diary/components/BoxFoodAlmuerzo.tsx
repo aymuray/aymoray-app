@@ -18,9 +18,9 @@ const BoxFoodAlmuerzo = ({ title, onPress }) => {
   const [sumaCal, setSumaCal] = useState(0);
   const { navigate } = useNavigation();
   useEffect(() => {
-    if (isFocused) {
+    // if (isFocused) {
       getRecipe();
-    }
+    // }
   }, [ isFocused ,uid, recipes, sumaCal]);
 
   const getRecipe = async () => {

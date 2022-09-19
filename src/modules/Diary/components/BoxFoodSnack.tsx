@@ -19,9 +19,9 @@ const BoxFoodSnack = ({ title, onPress }) => {
   const { navigate } = useNavigation();
   useEffect(() => {
     console.log(recipes)
-    if (isFocused) {
+    // if (isFocused) {
       getRecipe();
-    }
+    // }
   }, [ isFocused ,uid, recipes, sumaCal]);
 
   const getRecipe = async () => {

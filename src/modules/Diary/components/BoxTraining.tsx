@@ -39,11 +39,11 @@ const BoxTraining = ({ title, onPress }) => {
   const { navigate } = useNavigation();
   useEffect(() => {
     console.log(recipes)
-    if (isFocused) {
+    // if (isFocused) {
       let fecha = new Date();
       setDia(fecha.getDay());
       getExercices();
-    }
+    // }
   }, [ isFocused ,uid, recipes, sumaCal, dia, lunes, martes, miercoles, jueves, viernes, sabado, domingo, exercise, totalMinDomingo, totalMinLunes, totalMinMartes, totalMinMiercoles, totalMinJueves, totalMinViernes, totalMinSabado]);
 
   const getExercices = async () => {
@@ -249,7 +249,7 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"martes"} />
                       </View>
                   )}
                 )}
@@ -289,7 +289,7 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"miercoles"} />
                       </View>
                   )}
                 )}
@@ -329,7 +329,7 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"jueves"} />
                       </View>
                   )}
                 )}
@@ -369,7 +369,7 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"viernes"} />
                       </View>
                   )}
                 )}
@@ -409,7 +409,7 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"sabado"} />
                       </View>
                   )}
                 )}
@@ -449,12 +449,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"domingo"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {exercise.length !== 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16

@@ -11,22 +11,22 @@ const SLIDER_WIDTH = width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 const ITEM_HEIGHT = height;
 const DATA = [
-  {
-    bg: require("images/BG_1.png"),
-    title: "Consejos simples para equilibrar su mente, cuerpo y alma",
-  },
+  // {
+  //   bg: require("images/BG_1.png"),
+  //   title: "Consejos simples para equilibrar su mente, cuerpo y alma",
+  // },
   {
     bg: require("images/BG_2.png"),
-    title: `Pequeña
-los cambios pueden hacer una gran diferencia`,
+    title: `
+Pequeños cambios pueden hacer una gran diferencia`,
   },
-  {
-    bg: require("images/BG_3.png"),
-    title: "Comparte tu plan de entrenamiento con tus amigos",
-  },
+  // {
+  //   bg: require("images/BG_3.png"),
+  //   title: "Comparte tu plan de entrenamiento con tus amigos",
+  // },
   {
     bg: require("images/BG_4.png"),
-    title: "Realice un seguimiento de sus datos de nutrición, estado físico y salud",
+    title: "Inteligencia artificial nos ayuda a obtener una dieta para ti",
   },
   {
     bg: require("images/BG_5.png"),
@@ -101,6 +101,7 @@ const Walkthoughs = () => {
     <View flex backgroundColor={"black"}>
       <Carousel
         data={DATA}
+        layout="default"
         renderItem={_renderItem}
         sliderWidth={SLIDER_WIDTH}
         sliderHeight={ITEM_HEIGHT}
@@ -109,7 +110,6 @@ const Walkthoughs = () => {
         onSnapToItem={setIndex}
         inactiveSlideScale={1}
         bounces={false}
-          // firstItem={4}
         ref={refCarousel}
       />
       <PaginationBottom
@@ -127,7 +127,7 @@ export default Walkthoughs;
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: Platform.OS === "android" ? height + 30 : height,
+    height: Platform.OS === "android" ? height + 60 : height,
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 80 + getBottomSpace(),
