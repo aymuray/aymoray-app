@@ -10,10 +10,12 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db} from "config/fb";
 import Diary from "modules/Diary";
 import ListDetailRecipes from "modules/ListDetailRecipes";
+import {useState} from 'react';
 const SwipeableItemRecipe = ({ children, dataRecipe}) => {
   const nvg = useNavigation();
   const { navigate } = useNavigation();
   const swipeableRef = useRef(null);
+  const [checkFood, setCheckFood] = useState(false);
 
   const deleteRecipe = React.useCallback(async () => {
     await deleteDoc(doc(db, "Menus", dataRecipe.id)).then( ()=>{
@@ -37,6 +39,7 @@ const SwipeableItemRecipe = ({ children, dataRecipe}) => {
       inputRange: [-400, -160, 0],
       outputRange: [0, 0, 160],
     });
+
     return (
       <Animated.View
         style={{
@@ -49,6 +52,19 @@ const SwipeableItemRecipe = ({ children, dataRecipe}) => {
           end={{ x: 1, y: 0 }}
           style={styles.linear}
         >
+          {(checkFood == false) ? <RectButton style={styles.btn} onPress={setCheckFood(true)}>
+            <Image source={Assets.icons.ic_checkbox} marginB-8 />
+            <Text R12 white>
+              Confirmar
+            </Text>
+          </RectButton> : 
+          <RectButton style={styles.btn} onPress={setCheckFood(false)}>
+          <Image source={Assets.icons.ic_back} marginB-8 />
+          <Text R12 white>
+            Cancelar
+          </Text>
+        </RectButton> }
+
           <RectButton style={styles.btn} onPress={deleteRecipe}>
             <Image source={Assets.icons.ic_delete_wo_plan} marginB-8 />
             <Text R12 white>
