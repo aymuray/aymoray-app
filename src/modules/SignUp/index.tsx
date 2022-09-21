@@ -13,31 +13,39 @@ import {auth} from "config/fb";
 import Login from "modules/Login";
 const SignUp = () => {
   const [RegistroFirebase, setRegistroFirebase] = useState('');
+  const [cargando, setCargando] = useState(true);
+  const [textoBotonRegistro, setTextoBotonRegistro] = useState('Registrarse');
   const {navigate} = useNavigation();
   const onLogin = React.useCallback(() => {
     navigate(Routes.Login);
   }, []);
   const onSignUp = React.useCallback(async() => {
-    setRegistroFirebase('')
-    var email = getValues("email")
-    var password = getValues("password")
-    var repassword = getValues("rePassword")
-    if (password === repassword){
-      await createUserWithEmailAndPassword (auth, email, password).then( ()=>{
-        navigate(Routes.StepOne);
-      }).catch( error =>{
-        console.log(error.message)
-        if (error.message==='Firebase: Error (auth/invalid-email).'){
-          setRegistroFirebase('email')
-        }
-        if (error.message==='Firebase: Password should be at least 6 characters (auth/weak-password).'){
-          setRegistroFirebase('Password')
-        }
-      });
-    }else {
+    if (cargando){
+      setRegistroFirebase('');
+      setCargando(false);
+      setTextoBotonRegistro('Cargando...');
+      var email = getValues("email")
+      var password = getValues("password")
+      var repassword = getValues("rePassword")
+      if (password === repassword){
+        await createUserWithEmailAndPassword (auth, email, password).then( ()=>{
+          setTextoBotonRegistro('Registrarse');
+          setCargando(true);
+          navigate(Routes.StepOne);
+        }).catch( error =>{
+          console.log(error.message)
+          if (error.message==='Firebase: Error (auth/invalid-email).'){
+            setRegistroFirebase('email')
+          }
+          if (error.message==='Firebase: Password should be at least 6 characters (auth/weak-password).'){
+            setRegistroFirebase('Password')
+          }
+        });
+      }else {
         setRegistroFirebase('rePassword')
+      }
     }
-  }, []);
+  }, [cargando]);
 
   const {control, getValues, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
@@ -113,7 +121,7 @@ const SignUp = () => {
         {RegistroFirebase==='email' && <Text R14 color28 style={{paddingBottom: 12, color: "#ff0000"}}>Correo invalido</Text>}
         {RegistroFirebase==='Password' && <Text R14 color28 style={{paddingBottom: 12, color: "#ff0000"}}>La contraseña debe tener al menos 6 caracteres</Text>}
         <ButtonLinear
-          title={'Registrarse'}
+          title={textoBotonRegistro}
           style={styles.btnSignUp}
           onPress={handleSubmit(onSignUp)}
         />
