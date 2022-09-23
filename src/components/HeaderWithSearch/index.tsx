@@ -15,6 +15,7 @@ interface Props {
   btnLeft?: ReactNode;
   btnRight?: ReactNode;
   title: string;
+  color?: string;
   onPress?: () => void;
   value?: string;
   onChangeText?: (value: string) => void;
@@ -31,6 +32,7 @@ const HeaderWithSearch = ({
   onChangeText,
   onClearText,
   back,
+  color,
   placeholder,
 }: Props) => {
   const { goBack } = useNavigation();
@@ -39,7 +41,7 @@ const HeaderWithSearch = ({
       <Button
         iconSource={Assets.icons.ic_back}
         link
-        color={Colors.color28}
+        color={color || Colors.color28}
         onPress={goBack}
       />
     ) : (
@@ -50,7 +52,7 @@ const HeaderWithSearch = ({
     <View>
             <Image
         source={Assets.icons.bg_tab}
-        style={{ position: "absolute", width: width, height: 300}}
+        style={{ position: "absolute", width: width, height: 300, top: -50}}
       />
       <View style={styles.container}>
       <View

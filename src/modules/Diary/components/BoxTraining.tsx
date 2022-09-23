@@ -26,6 +26,16 @@ const BoxTraining = ({ title, onPress }) => {
   const [sabado, setSabado] = useState([]);
   const [domingo, setDomingo] = useState([]);
   const [exercise, setExercise] = useState([]);
+  const [totalMinLunes, setTotalMinLunes] = useState(0);
+  const [totalMinMartes, setTotalMinMartes] = useState(0);
+  const [totalMinMiercoles, setTotalMinMiercoles] = useState(0);
+  const [totalMinJueves, setTotalMinJueves] = useState(0);
+  const [totalMinViernes, setTotalMinViernes] = useState(0);
+  const [totalMinSabado, setTotalMinSabado] = useState(0);
+  const [totalMinDomingo, setTotalMinDomingo] = useState(0);
+
+
+
   const { navigate } = useNavigation();
   useEffect(() => {
     console.log(recipes)
@@ -34,7 +44,7 @@ const BoxTraining = ({ title, onPress }) => {
       setDia(fecha.getDay());
       getExercices();
     }
-  }, [ isFocused ,uid, recipes, sumaCal]);
+  }, [ isFocused ,uid, recipes, sumaCal, dia, lunes, martes, miercoles, jueves, viernes, sabado, domingo, exercise, totalMinDomingo, totalMinLunes, totalMinMartes, totalMinMiercoles, totalMinJueves, totalMinViernes, totalMinSabado]);
 
   const getExercices = async () => {
     console.log('++++++++++++++++entre');
@@ -56,6 +66,15 @@ const BoxTraining = ({ title, onPress }) => {
       let tempSabado = []
       let tempDomingo = []
 
+      let tempMinutosLunes = 0;
+      let tempMinutosMartes = 0;
+      let tempMinutosMiercoles = 0;
+      let tempMinutosJueves = 0;
+      let tempMinutosViernes = 0;
+      let tempMinutosSabado = 0;
+      let tempMinutosDomingo = 0;
+
+
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         temp.push(doc.data());
@@ -67,6 +86,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosLunes = tempMinutosLunes + parseInt(doc.data().minutos);
           }
           if (item === "martes"){
             tempMartes.push(
@@ -75,6 +95,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosMartes = tempMinutosMartes + parseInt(doc.data().minutos);
           }
           if (item === "miercoles"){
             tempMiercoles.push(
@@ -83,6 +104,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosMiercoles = tempMinutosMiercoles + parseInt(doc.data().minutos);
           }
           if (item === "jueves"){
             tempJueves.push(
@@ -91,6 +113,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosJueves = tempMinutosJueves + parseInt(doc.data().minutos);
           }
           if (item === "viernes"){
             tempViernes.push(
@@ -99,6 +122,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosViernes = tempMinutosViernes + parseInt(doc.data().minutos);
           }
           if (item === "sabado"){
             tempSabado.push(
@@ -107,6 +131,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosSabado = tempMinutosSabado + parseInt(doc.data().minutos);
           }
           if (item === "domingo"){
             tempDomingo.push(
@@ -115,6 +140,7 @@ const BoxTraining = ({ title, onPress }) => {
                   data: doc.data(),
                 }
             )
+            tempMinutosDomingo = tempMinutosDomingo + parseInt(doc.data().minutos);
           }
         })
       });
@@ -127,7 +153,14 @@ const BoxTraining = ({ title, onPress }) => {
         setViernes(tempViernes);
         setSabado(tempSabado);
         setDomingo(tempDomingo);
-        console.log('----se actualizo--------')
+        setTotalMinLunes(tempMinutosLunes);
+        setTotalMinMartes(tempMinutosMartes);
+        setTotalMinMiercoles(tempMinutosMiercoles);
+        setTotalMinJueves(tempMinutosJueves);
+        setTotalMinViernes(tempMinutosViernes);
+        setTotalMinSabado(tempMinutosSabado);
+        console.log('----------------------', tempMinutosDomingo);
+        setTotalMinDomingo(tempMinutosDomingo);
       }
 
     } catch (e) {
@@ -175,11 +208,39 @@ const BoxTraining = ({ title, onPress }) => {
                 {lunes.map((item, index) => {
                   return (
                       <View key={index}>
-                        <View height={1} backgroundColor={Colors.color28} />
+                        <View height={1} backgroundColor={Colors.line} />
                         <ItemExercise data={item} dia={"lunes"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {lunes.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinLunes}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 2 ?
@@ -188,10 +249,38 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"martes"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {martes.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinMartes}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 3 ?
@@ -200,10 +289,38 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"miercoles"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {miercoles.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinMiercoles}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 4 ?
@@ -212,10 +329,38 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"jueves"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {jueves.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinJueves}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 5 ?
@@ -224,10 +369,38 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"viernes"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {viernes.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinViernes}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 6 ?
@@ -236,10 +409,38 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"sabado"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {sabado.length != 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinSabado}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
           {dia == 0 ?
@@ -248,41 +449,40 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"domingo"} />
                       </View>
                   )}
                 )}
+                <View height={1} backgroundColor={Colors.line} />
+                {domingo.length !== 0 ? <View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    <Text M24 color28 marginR-8>
+                      Total Minutos: {totalMinDomingo}
+                    </Text>
+                    <Image source={Assets.icons.ic_nutrition_info} />
+                  </View>
+                </View>:<View
+                    paddingT-16
+                    paddingB-12
+                    paddingH-16
+                    row
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <View row style={{ alignItems: "center" }}>
+                    {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
+                  </View>
+                  <Text R14 color6D>
+                    Vemos que tienes un día libre 👀
+                  </Text>
+                </View>}
               </View>
               : null }
-          <View height={1} backgroundColor={Colors.line} />
-          {exercise.length != 0 ? <View
-              paddingT-16
-              paddingB-12
-              paddingH-16
-              row
-              style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <View row style={{ alignItems: "center" }}>
-              <Text M24 color28 marginR-8>
-                {sumaCal} Cal {exercise}
-              </Text>
-              <Image source={Assets.icons.ic_nutrition_info} />
-            </View>
-          </View>:<View
-              paddingT-16
-              paddingB-12
-              paddingH-16
-              row
-              style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <View row style={{ alignItems: "center" }}>
-              {/* <Image source={Assets.icons.ic_nutrition_info} /> */}
-            </View>
-            <Text R14 color6D>
-                Vemos que tienes un día libre 👀
-              </Text>
-          </View>}
-          
         </View>
       </View>
   );

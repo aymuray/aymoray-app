@@ -82,7 +82,7 @@ const StepSix = () => {
             marginTop: -20,
           }}>
           <Text R18 color28>
-            Ganar{' '}
+            Perder{' '}
           </Text>
           <Text B18 color28>
             0.4kg
