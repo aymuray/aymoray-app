@@ -39,7 +39,7 @@ const Diary = () => {
   const isFocused = useIsFocused();
 
   useEffect(async () => {
-      // if (isFocused) {
+      if (isFocused) {
           onAuthStateChanged(auth, (user) => {
               if (user) {
                   setName(user.displayName);
@@ -54,7 +54,7 @@ const Diary = () => {
           setGrasaCoporal(parseInt(docSnap.data().GC))
           setPeso(docSnap.data().peso);
           LogBox.ignoreLogs(["timer"]);
-      // }
+      }
   }, [uid, isFocused]);
 
   return (

@@ -39,11 +39,11 @@ const BoxTraining = ({ title, onPress }) => {
   const { navigate } = useNavigation();
   useEffect(() => {
     console.log(recipes)
-    // if (isFocused) {
+    if (isFocused) {
       let fecha = new Date();
       setDia(fecha.getDay());
       getExercices();
-    // }
+    }
   }, [ isFocused ,uid, recipes, sumaCal, dia, lunes, martes, miercoles, jueves, viernes, sabado, domingo, exercise, totalMinDomingo, totalMinLunes, totalMinMartes, totalMinMiercoles, totalMinJueves, totalMinViernes, totalMinSabado]);
 
   const getExercices = async () => {
