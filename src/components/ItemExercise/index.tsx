@@ -31,14 +31,14 @@ const ItemExercise = ({data, dia}) => {
               {data.data.minutos} min
             </Text>
           </View>
-          {/*{!!rating && (*/}
-          {/*  <View row marginL-24 centerV>*/}
-          {/*    <Image source={Assets.icons.ic_rating_16} />*/}
-          {/*    <Text R14 color6D marginL-4>*/}
-          {/*      10*/}
-          {/*    </Text>*/}
-          {/*  </View>*/}
-          {/*)}*/}
+          {/* {!!rating && (
+           <View row marginL-24 centerV>
+             <Image source={Assets.icons.ic_rating_16} />
+             <Text R14 color6D marginL-4>
+               10
+             </Text>
+           </View>
+          )} */}
         </View>
       </View>
     </SwipeableItemExercise>
