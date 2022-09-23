@@ -23,7 +23,7 @@ const DaysExercise = ({setChange, change}) => {
         let fecha = new Date();
         setCurrentDay(fecha.getDay());
         getExercices()
-    }, [displayDay, isFocused]);
+    }, [displayDay, isFocused, currentDay]);
 
     function filterByDays(exersices, query) {
        return exersices.filter(exercise => exercise.dias.includes(query.toLowerCase()))

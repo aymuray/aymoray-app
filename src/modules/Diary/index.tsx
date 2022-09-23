@@ -238,7 +238,7 @@ const Diary = () => {
             navigate(Routes.AddFood);
           }}
         />
-         <BoxWater title={"Agua"} />
+         {/* <BoxWater title={"Agua"} /> */}
       </ScrollView>
     </View>
   );
