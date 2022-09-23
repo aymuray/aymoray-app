@@ -4,7 +4,7 @@ import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
 import React, {useCallback, useEffect, useState} from "react";
 import {LogBox, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
-import { View, Assets, Colors, Image, Text } from "react-native-ui-lib";
+import { View, Assets, Colors, Image, Text, Button } from "react-native-ui-lib";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "config/fb";
 import {doc, getDocs, query, collection, where} from "firebase/firestore";
@@ -16,6 +16,26 @@ const ListDetailRecipes = (props) => {
   const [recipe, setRecipe] = useState(props.route.params.dataRecipe.data);
 
   const [IsRefreshing, setIsRefreshing] = useState(true);
+  const [diaActual, setDiaActual] = useState(0);
+  
+  const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+  const diaForward = () => {
+    if (diaActual === 6) {
+        setDiaActual(0)
+    } else {
+        setDiaActual(diaActual + 1)
+    }
+    
+  }
+
+  const diaBack = () => {
+    if (diaActual === 0) {
+        setDiaActual(6)
+    } else {
+        setDiaActual(diaActual - 1)
+    }
+  }
 
     const { navigate } = useNavigation();
 
@@ -24,10 +44,60 @@ const ListDetailRecipes = (props) => {
         // console.log(recipe.desayuno.primerElemento);
     })
 
-
+    
   return (
     <View flex>
       <ScrollView>
+
+        {/* Agregado */}
+        <View
+          marginH-10
+          marginB-16
+          style={{
+            borderRadius: 6,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            elevation: 3,
+            marginTop: 20,
+          }}
+          backgroundColor={Colors.white}
+        >
+          <View
+            padding-16
+            row
+            style={{
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Button 
+                iconSource={Assets.icons.btn_back_day} 
+                onPress = {() => {diaBack()}}
+                
+            />
+            <Text 
+                R14 
+                color28
+                style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                }}    
+            >
+              {diasSemana[diaActual]}
+            </Text>
+            <Button 
+                iconSource={Assets.icons.btn_next_day} 
+                onPress = {() => {diaForward()}}
+            />
+          </View>
+        {/* </View> */}
+
+
         <View
             row
             paddingT-16
@@ -37,9 +107,9 @@ const ListDetailRecipes = (props) => {
             }}
         >
         </View>
-          {props.route.params.dataRecipe.data.dias >= 1 ?
+          {props.route.params.dataRecipe.data.dias >= 1 && diaActual === 0 ?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -132,9 +202,9 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 2 ?
+          {props.route.params.dataRecipe.data.dias >= 2 && diaActual === 1?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -226,9 +296,9 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 3 ?
+          {props.route.params.dataRecipe.data.dias >= 3 && diaActual === 2?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -321,9 +391,9 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 4 ?
+          {props.route.params.dataRecipe.data.dias >= 4 && diaActual === 3 ?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -415,9 +485,9 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 5 ?
+          {props.route.params.dataRecipe.data.dias >= 5 && diaActual === 4?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -510,9 +580,9 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 6 ?
+          {props.route.params.dataRecipe.data.dias >= 6 && diaActual === 5?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -603,9 +673,9 @@ const ListDetailRecipes = (props) => {
                   </View>
               </View>
               : null }
-          {props.route.params.dataRecipe.data.dias >= 7 ?
+          {props.route.params.dataRecipe.data.dias >= 7 && diaActual === 6 ?
               <View
-                  marginH-16
+                  marginH-10
                   marginB-16
                   style={{
                       borderRadius: 6,
@@ -628,7 +698,7 @@ const ListDetailRecipes = (props) => {
                       style={{ justifyContent: "space-between", alignItems: "center" }}
                   >
                       <Text H14 color28 uppercase>
-                          dia 5
+                          dia 7
                       </Text>
                   </View>
                   <View height={1} backgroundColor={Colors.color28} marginB-16 />
@@ -698,6 +768,7 @@ const ListDetailRecipes = (props) => {
 
               </View>
               : null }
+              </View>
       </ScrollView>
     </View>
   );
