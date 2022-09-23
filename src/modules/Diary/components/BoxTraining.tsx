@@ -208,13 +208,13 @@ const BoxTraining = ({ title, onPress }) => {
                 {lunes.map((item, index) => {
                   return (
                       <View key={index}>
-                        <View height={1} backgroundColor={Colors.color28} />
+                        <View height={1} backgroundColor={Colors.line} />
                         <ItemExercise data={item} dia={"lunes"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {lunes.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -249,12 +249,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"martes"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {martes.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -289,12 +289,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"miercoles"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {miercoles.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -329,12 +329,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"jueves"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {jueves.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -369,12 +369,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"viernes"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {viernes.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -409,12 +409,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"sabado"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {sabado.length != 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16
@@ -449,12 +449,12 @@ const BoxTraining = ({ title, onPress }) => {
                   return (
                       <View key={index}>
                         <View height={1} backgroundColor={Colors.line} />
-                        <ItemExercise data={item} dia={"lunes"} />
+                        <ItemExercise data={item} dia={"domingo"} />
                       </View>
                   )}
                 )}
                 <View height={1} backgroundColor={Colors.line} />
-                {exercise.length != 0 ? <View
+                {domingo.length !== 0 ? <View
                     paddingT-16
                     paddingB-12
                     paddingH-16

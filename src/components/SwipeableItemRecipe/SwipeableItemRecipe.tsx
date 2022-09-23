@@ -26,12 +26,6 @@ const SwipeableItemRecipe = ({ children, dataRecipe}) => {
     );
   }, []);
 
-  const detailRecipe = React.useCallback(async () => {
-
-    navigate(Routes.ListDetailRecipes, {dataRecipe: dataRecipe});
-    swipeableRef.current.close();
-  }, []);
-
   const renderRightActions = useCallback((progress, dragX) => {
     const trans = dragX.interpolate({
       inputRange: [-400, -160, 0],
@@ -56,12 +50,12 @@ const SwipeableItemRecipe = ({ children, dataRecipe}) => {
             </Text>
           </RectButton>
 
-          <RectButton style={styles.btn} onPress={detailRecipe}>
+          {/* <RectButton style={styles.btn} onPress={detailRecipe}>
             <Image source={Assets.icons.ic_active_plan} marginB-8 />
             <Text R12 white>
               Detalle
             </Text>
-          </RectButton>
+          </RectButton> */}
         </LinearGradient>
       </Animated.View>
     );
