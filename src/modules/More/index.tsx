@@ -19,11 +19,11 @@ const More = () => {
       title: "Mi perfil",
       onPress: () => navigate(Routes.MyProfile),
     },
-    {
-      icon: Assets.icons.ic_graph,
-      title: "Graficos",
-      onPress: () => navigate(Routes.Graph),
-    },
+    // {
+    //   icon: Assets.icons.ic_graph,
+    //   title: "Graficos",
+    //   onPress: () => navigate(Routes.Graph),
+    // },
     {
       icon: Assets.icons.ic_help,
       title: "Cerrar sesión",
@@ -46,10 +46,10 @@ const More = () => {
         )
       },
     },
-    {
-      icon: Assets.icons.ic_settings,
-      title: "Ajustes",
-    },
+    // {
+    //   icon: Assets.icons.ic_settings,
+    //   title: "Ajustes",
+    // },
   ];
   return (
     <View flex backgroundColor={Colors.background}>
