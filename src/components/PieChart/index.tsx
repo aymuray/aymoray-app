@@ -58,7 +58,7 @@ const PieChart = ({change}) => {
   ]);
 
   useEffect(() => { 
-        getExercices();
+    getExercices();
   }, [isFocused,change]);
 
   const getExercices = async () => {

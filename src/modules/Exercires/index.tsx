@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import HeaderWithSearch from "components/HeaderWithSearch";
 import Routes from "config/Routes";
 import { width } from "config/scaleAccordingToDevice";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { View, Assets, Colors, Image, Text } from "react-native-ui-lib";
 import BoxExercire from "./components/BoxExercire";
@@ -30,6 +30,7 @@ const Exercires = () => {
   const goSearchExercires = useCallback(() => {
     navigate(Routes.SearchExercires);
   }, []);
+  
   return (
     <View flex>
       <HeaderWithSearch title="Mis Ejercicios"/>
