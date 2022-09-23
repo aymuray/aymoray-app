@@ -10,6 +10,7 @@ import {auth, db} from "config/fb";
 import {doc, getDocs, query, collection, where} from "firebase/firestore";
 import ItemRecipe from "components/ItemRecipe";
 import { useIsFocused } from '@react-navigation/native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const widthItem = (width - 48) / 2;
 const ListRecipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -65,7 +66,9 @@ const ListRecipes = () => {
         setIsRefreshing(true);
     };
 
-
+    const detailRecipe = React.useCallback(async (item) => {
+        navigate(Routes.ListDetailRecipes, {dataRecipe: item});
+      }, []);
 
   const goSearchExercires = useCallback(() => {
     navigate(Routes.SearchExercires);
@@ -111,10 +114,10 @@ const ListRecipes = () => {
               </View>
               {recipes.map((item, index) => {
                   return (
-                      <View key={index}>
+                      <TouchableWithoutFeedback key={index} onPress={() => detailRecipe(item)}>
                           <View height={1} backgroundColor={Colors.line} />
                           <ItemRecipe dataRecipe={item}/>
-                      </View>
+                      </TouchableWithoutFeedback>
                   )}
               )}
 

@@ -225,6 +225,13 @@ const RootStack = () => {
           }}
         />
         <Screen
+          name={Routes.ListDetailRecipes}
+          component={ListDetailRecipes}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Screen
           name={Routes.AutoTracking}
           component={AutoTracking}
           options={{
@@ -523,17 +530,6 @@ const RootStack = () => {
           component={GenerateRecipe}
           options={{
               title: "Generar receta",
-              headerStyle: {
-                  shadowColor: "transparent",
-                  elevation: 0,
-              },
-          }}
-        />
-        <Screen
-          name={Routes.ListDetailRecipes}
-          component={ListDetailRecipes}
-          options={{
-              title: "detalle receta",
               headerStyle: {
                   shadowColor: "transparent",
                   elevation: 0,
