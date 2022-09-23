@@ -17,25 +17,33 @@ import ForgotPassword from "modules/ForgotPassword";
 const Login = () => {
   const [LoginFirebase, setLoginFirebase] = useState('');
   const {navigate} = useNavigation();
+  const [cargando, setCargando] = useState(true);
+  const [textoBotonLogin, setTextoBotonLogin] = useState('Iniciar sesion');
   const onLogin = React.useCallback(async (data) => {
-      setLoginFirebase('')
-      await signInWithEmailAndPassword (auth, data.email.replace(" ",""), data.password).then( ()=>{
-          setValue('email', '');
-          setValue('password', '');
-          navigate(Routes.MainTab);
-      }).catch( error =>{
-          console.log(error.message)
-          if (error.message==='Firebase: Error (auth/invalid-email).'){
-              setLoginFirebase('email')
-          }
-          if (error.message==='Firebase: Error (auth/wrong-password).'){
-              setLoginFirebase('contraseña')
-          }
-          if (error.message==='Firebase: Error (auth/user-not-found).'){
-              setLoginFirebase('noSeEncontro')
-          }
-      });
-  }, []);
+      if (cargando){
+          setCargando(false);
+          setLoginFirebase('');
+          setTextoBotonLogin('Cargando...');
+          await signInWithEmailAndPassword (auth, data.email.replace(" ",""), data.password).then( ()=>{
+              setValue('email', '');
+              setValue('password', '');
+              setTextoBotonLogin('Iniciar sesion');
+              setCargando(true);
+              navigate(Routes.MainTab);
+          }).catch( error =>{
+              console.log(error.message)
+              if (error.message==='Firebase: Error (auth/invalid-email).'){
+                  setLoginFirebase('email')
+              }
+              if (error.message==='Firebase: Error (auth/wrong-password).'){
+                  setLoginFirebase('contraseña')
+              }
+              if (error.message==='Firebase: Error (auth/user-not-found).'){
+                  setLoginFirebase('noSeEncontro')
+              }
+          });
+      }
+  }, [cargando]);
   const onSignUp = React.useCallback(() => {
       navigate(Routes.SignUp);
   }, []);
@@ -107,7 +115,7 @@ const Login = () => {
             </View>
 
             <ButtonLinear
-                title={'Iniciar sesion'}
+                title={textoBotonLogin}
                 style={styles.btnSignUp}
                 onPress={handleSubmit(onLogin)}
             />

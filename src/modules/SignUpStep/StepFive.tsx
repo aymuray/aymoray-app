@@ -61,6 +61,10 @@ const StepFive = () => {
           user.GC = (1.2 * user.IMC) + (0.23 * user.edad) - (10.8 * 0) - 5.4
       }
 
+      if (index !== 'PIES') {
+          estatura = estatura * 100;
+      }
+
 
       if (user.sexo === 'Hombre') {
           user.TMB = 66 + (13.7 * peso) + (5 * estatura) - (6.8 * user.edad)

@@ -47,8 +47,8 @@ const ListDetailRecipes = (props) => {
     
   return (
     <View flex>
+        <HeaderWithSearch title="Detalle Receta"></HeaderWithSearch>
       <ScrollView>
-
         {/* Agregado */}
         <View
           marginH-10
@@ -113,7 +113,6 @@ const ListDetailRecipes = (props) => {
                   marginB-16
                   style={{
                       borderRadius: 6,
-                      backgroundColor: "rgb(187,238,199)",
                       shadowColor: "#000",
                       shadowOffset: {
                           width: 0,
@@ -302,7 +301,6 @@ const ListDetailRecipes = (props) => {
                   marginB-16
                   style={{
                       borderRadius: 6,
-                      backgroundColor: "rgb(187,238,199)",
                       shadowColor: "#000",
                       shadowOffset: {
                           width: 0,
@@ -491,7 +489,6 @@ const ListDetailRecipes = (props) => {
                   marginB-16
                   style={{
                       borderRadius: 6,
-                      backgroundColor: "rgb(187,238,199)",
                       shadowColor: "#000",
                       shadowOffset: {
                           width: 0,
@@ -679,7 +676,6 @@ const ListDetailRecipes = (props) => {
                   marginB-16
                   style={{
                       borderRadius: 6,
-                      backgroundColor: "rgb(187,238,199)",
                       shadowColor: "#000",
                       shadowOffset: {
                           width: 0,
