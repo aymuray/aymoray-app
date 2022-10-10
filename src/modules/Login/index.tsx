@@ -34,12 +34,18 @@ const Login = () => {
               console.log(error.message)
               if (error.message==='Firebase: Error (auth/invalid-email).'){
                   setLoginFirebase('email')
+                  setTextoBotonLogin('Iniciar sesion');
+                  setCargando(true);
               }
               if (error.message==='Firebase: Error (auth/wrong-password).'){
                   setLoginFirebase('contraseña')
+                  setTextoBotonLogin('Iniciar sesion');
+                  setCargando(true);
               }
               if (error.message==='Firebase: Error (auth/user-not-found).'){
                   setLoginFirebase('noSeEncontro')
+                  setTextoBotonLogin('Iniciar sesion');
+                  setCargando(true);
               }
           });
       }

@@ -36,13 +36,19 @@ const SignUp = () => {
           console.log(error.message)
           if (error.message==='Firebase: Error (auth/invalid-email).'){
             setRegistroFirebase('email')
+            setTextoBotonRegistro('Registrarse');
+            setCargando(true);
           }
           if (error.message==='Firebase: Password should be at least 6 characters (auth/weak-password).'){
             setRegistroFirebase('Password')
+            setTextoBotonRegistro('Registrarse');
+            setCargando(true);
           }
         });
       }else {
         setRegistroFirebase('rePassword')
+        setTextoBotonRegistro('Registrarse');
+        setCargando(true);
       }
     }
   }, [cargando]);
